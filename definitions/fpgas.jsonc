@@ -796,5 +796,23 @@
       "nextpnr-family": "GW2A-18C",
       "packer-device": "GW2A-18C"
     }
+  },
+
+  //
+  //
+  // ============= XILINX ARCHITECTURE
+  //
+  //
+  "xc7a35tcpg236": {
+    "part-num": "XC7A35TCPG236",
+    "arch": "xilinx",
+    "size": "35k",
+    "xilinx-params": {
+      "yosys-family": "",
+      "type": "",
+      "package": "",
+      "speed": ""
+    }
   }
+
 }
