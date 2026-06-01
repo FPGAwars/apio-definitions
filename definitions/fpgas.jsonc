@@ -808,10 +808,10 @@
     "arch": "xilinx",
     "size": "35k",
     "xilinx-params": {
-      "yosys-family": "",
-      "type": "",
-      "package": "",
-      "speed": ""
+      "yosys-family": "dummy",
+      "type": "dummy",
+      "package": "dummy",
+      "speed": "dummy"
     }
   }
 
