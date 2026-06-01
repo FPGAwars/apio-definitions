@@ -1073,5 +1073,20 @@
       "pid": "6010",
       "product-regex": "^(USB <-> Serial Converter)|(Lattice ECP5 Versa Board)"
     }
+  },
+
+  // https://digilent.com/reference/programmable-logic/basys-3/start
+  "basys3": {
+    "description": "Basys3 (Xilinx, Artix7)",
+    "fpga-id": "xc7a35tcpg236",
+    "programmer": {
+      "id": "openfpgaloader",
+      "extra-args": "--board basys3"
+    },
+    "usb": {
+      "vid": "0403",
+      "pid": "6010",
+      "product-regex": "^Basys3*"
+    }
   }
 }
