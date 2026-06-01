@@ -92,11 +92,11 @@
   },
   // https://github.com/BrisbaneSilicon/BRS-100-GW1NR9
   "brs-100-gw1nr9": {
-    "description": "Brisbane Silicon 9k",
+    "description": "BrisbaneSilicon 9k",
     "fpga-id": "gw1nr-lv9qn88pc6-i5",
     "programmer": {
       "id": "openfpgaloader",
-      "extra-args": "-b tangnano9k -f"
+      "extra-args": "-b brs-100-gw1nr9 -f"
     },
     "usb": {
       "vid": "0403",
