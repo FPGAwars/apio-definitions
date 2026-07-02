@@ -353,6 +353,19 @@
       "product-regex": "^Dual RS232-HS"
     }
   },
+  // https://github.com/BrisbaneSilicon/EPM11-FPGA
+  "epm11": {
+    "description": "BrisbaneSilicon EPM11",
+    "fpga-id": "gw1nr-lv9qn88pc6-i5",
+    "programmer": {
+      "id": "openfpgaloader",
+      "extra-args": "-b epm11 -f"
+    },
+    "usb": {
+      "vid": "0403",
+      "pid": "6010"
+    }
+  },
   "fleafpga-ohm-ft2232h": {
     "legacy-name": "FleaFPGA-Ohm_(FT2232H)",
     "description": "FleaFPGA-Ohm_(FT2232H)",
