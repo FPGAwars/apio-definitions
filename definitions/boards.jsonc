@@ -54,6 +54,20 @@
       "product-regex": "^Single RS232-HS"
     }
   },
+  // https://github.com/maxisimonazzi/Azukar-FPGA
+  // https://www.azukar.com.ar
+    "azukar2": {
+    "description": "AZUKAR v2",
+    "fpga-id": "ice40hx4k-tq144-8k",
+    "programmer": {
+      "id": "iceprog"
+    },
+    "usb": {
+      "vid": "0403",
+      "pid": "6010",
+      "product-regex": "^--.. Azukar FPGA ..--"
+    }
+  },
   // URL: TBD
   "blackice": {
     "description": "BlackIce",
