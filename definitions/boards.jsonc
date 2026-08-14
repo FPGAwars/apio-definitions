@@ -1378,12 +1378,22 @@
     }
   }
 ,
-   "slg47910v": {
+  "slg47910v": {
     "description": "Renesas SLG47910V (ForgeFPGA / Shrike Lite)",
     "fpga-id": "slg47910v",
     "programmer": {
       "id": "openfpgaloader"
     }
+  },
+  "shrike-fi": {
+    "description": "Vicharak Shrike-Fi",
+    "fpga-id": "slg47910v",
+    "programmer": {
+      "id": "shrike-fi"
+    },
+    "usb": {
+      "vid": "1a86",
+      "pid": "55d4"
+    }
   }
 }
-

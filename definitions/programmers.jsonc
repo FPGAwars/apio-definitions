@@ -83,8 +83,12 @@
     // Per https://github.com/trabucayre/openFPGALoader/issues/629
     "args": "--force-terminal-mode --verify"
   },
-  "apollo": {
+    "apollo": {
     "command": "apollo",
     "args": "configure"
+  },
+  "shrike-fi": {
+    "command": "mpremote",
+    "args": "connect ${SERIAL_PORT} fs cp ${BIN_FILE} :FPGA_bitstream_MCU.bin && mpremote connect ${SERIAL_PORT} exec \"import shrike; shrike.flash('FPGA_bitstream_MCU.bin'); print('FPGA PROGRAMMING DONE')\""
   }
 }
