@@ -996,4 +996,14 @@
       "speed": "1"
     }
   }
+,
+"slg47910v": {
+    "part-num": "SLG47910V",
+    "arch": "shrike",
+    "size": "SLG47910V",
+    "shrike-params": {
+        "family": "04",
+        "package": "26"
+    }
+}
 }

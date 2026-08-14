@@ -1377,4 +1377,13 @@
       "pid": "6001"
     }
   }
+,
+   "slg47910v": {
+    "description": "Renesas SLG47910V (ForgeFPGA / Shrike Lite)",
+    "fpga-id": "slg47910v",
+    "programmer": {
+      "id": "openfpgaloader"
+    }
+  }
 }
+
