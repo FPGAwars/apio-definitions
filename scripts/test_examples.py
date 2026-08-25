@@ -90,7 +90,7 @@ def get_apio_boards_definitions() -> Dict:
     result = result["boards"]
 
     # -- Dump for debugging.
-    print(json.dumps(result, indent=4))
+    print(json.dumps(result, indent=2))
 
     # -- Sanity check
     assert 50 < len(result.keys()) < 500
@@ -255,7 +255,7 @@ def test_example(board_name: str, example_name: str, board_defs: Dict) -> None:
     run_cmd(["apio", "clean"])
 
 
-def test_board(board_name: str, board_defs: Dict) -> None:
+def test_board(board_name: str, apio_board_defs: Dict) -> None:
     """Test board's examples."""
 
     print("\n--------------------------")
@@ -275,7 +275,7 @@ def test_board(board_name: str, board_defs: Dict) -> None:
         assert (
             example_dir.is_dir()
         ), f"Example {board_name}/{example_name} is not a dir."
-        test_example(board_name, example_name, board_defs)
+        test_example(board_name, example_name, apio_board_defs)
 
 
 def main() -> None:
@@ -287,9 +287,10 @@ def main() -> None:
     print()
 
     # -- Get apio board definitions
-    board_defs: Dict = get_apio_boards_definitions()
+    apio_board_defs: Dict = get_apio_boards_definitions()
 
     # -- Get names of boards with examples.
+    print(f"{EXAMPLES_DIR=}")
     board_names = glob("*", root_dir=EXAMPLES_DIR)
     board_names = sorted(board_names)
     assert len(board_names) > 20, f"Found too few boards: {board_names}"
@@ -299,7 +300,7 @@ def main() -> None:
         board_dir = EXAMPLES_DIR / board_name
         assert board_dir.is_dir(), f"Board dir is not a dir: {board_dir}"
         # -- This may call chdir().
-        test_board(board_name, board_defs)
+        test_board(board_name, apio_board_defs)
 
     print()
     print("Test completed OK.")
