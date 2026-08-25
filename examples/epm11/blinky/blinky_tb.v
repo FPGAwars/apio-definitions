@@ -20,8 +20,8 @@ module blinky_tb ();
   blinky #(
       .DIV(27000000)
   ) ticker (
-      .sys_clk  (sys_clk),
-      .led      (led)
+      .sys_clk(sys_clk),
+      .led    (led)
   );
 
   // Test main

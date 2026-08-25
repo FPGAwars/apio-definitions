@@ -4,7 +4,7 @@ module blinky #(
 ) (
     input      sys_clk,
     output reg led
-      // Active low
+    // Active low
 );
 
   // ---- Reset generator.
