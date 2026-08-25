@@ -11,6 +11,7 @@
         "oversizing",
         "popd",
         "pushd",
+        "realpath",
         "softprops",
         "yosys"
     ]

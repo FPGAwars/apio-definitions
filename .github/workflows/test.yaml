@@ -35,26 +35,41 @@ jobs:
         run: |
           pip install --force-reinstall -U \ git+https://github.com/fpgawars/apio.git
 
-      - name: Fetch apio example
-        run: |
-          mkdir test-project
-          cd test-project
-          apio examples fetch alhambra-ii/blinky
-
-      - name: Get apio packages dir
+      - name: Get apio 'definitions' package dir
         run: |
           apio_packages_dir=$(apio api get-system | jq -r '.system["apio-packages-dir"]')
           echo "APIO_PACKAGES_DIR=$apio_packages_dir" >> $GITHUB_ENV
+          apio_definitions_dir="${apio_packages_dir}/definitions"
+          echo "APIO_DEFINITIONS_DIR=$apio_definition_dir" >> $GITHUB_ENV
 
-      # Replace the content of the fetched apio definitions packages from
-      # definitions from this repository.
-      - name: Patch apio definitions package
+      # Overwrite the definitions in the installed apio package with the ones
+      # from this repo.
+      - name: Patch apio definitions
         run: |
-          ls $APIO_PACKAGES_DIR
-          rm -rf $APIO_PACKAGES_DIR/definitions
-          ls $APIO_PACKAGES_DIR
-          cp -r ./definitions $APIO_PACKAGES_DIR/definitions
-          ls $APIO_PACKAGES_DIR
+          ls -al $APIO_DEFINITIONS_DIR
+          cp -rf ./definitions/* $APIO_DEFINITIONS_DIR
+          ls -al $APIO_PACKAGES_DIR
+
+      # Copy the common examples files to the examples.
+      - name: Apply common example files
+        run: |
+          python ./script/copy-common-examples-files.py
+
+      # Overwrite the examples in the installed apio package with the ones
+      # from this repo.
+      - name: Patch apio with new definitions
+        run: |
+          ls -al $APIO_DEFINITIONS_DIR
+          cp -rf ./definitions/* $APIO_DEFINITIONS_DIR
+          ls -al $APIO_PACKAGES_DIR
+
+      - name: Patch apio with new examples
+        run: |
+          ls -al $APIO_DEFINITIONS_DIR
+          rm -rf $APIO_DEFINITIONS_DIR/examples
+          ls -al $APIO_DEFINITIONS_DIR
+          cp -r ./examples $APIO_DEFINITIONS_DIR
+          ls -al $APIO_DEFINITIONS_DIR
 
       - name: Show the patched boards definitions
         run: |
@@ -68,7 +83,29 @@ jobs:
         run: |
           apio api get-programmers
 
+      - name: Show the patched examples
+        run: |
+          apio api get-examples
+
+      - name: Fetch an apio example
+        run: |
+          mkdir test-project
+          cd test-project
+          apio examples fetch alhambra-ii/blinky
+
       - name: Build the test apio example
         run: |
           cd test-project
           apio build
+
+      - name: Delete local examples
+        run: |
+          ls -al
+          rm -rf examples
+          ls -al
+
+      - name: Test the patched examples
+        run: |
+          test_script=$(realpath ./scripts/test-examples.py)
+          cd $APIO_DEFINITIONS_DIR
+          python $test_script
