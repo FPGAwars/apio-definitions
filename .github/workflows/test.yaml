@@ -16,6 +16,10 @@ on:
   # Allow manual triggers.
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash -x {0}
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -34,6 +38,8 @@ jobs:
       - name: Install latest apio dev
         run: |
           pip install --force-reinstall -U \ git+https://github.com/fpgawars/apio.git
+          apio packages install
+          apio info system
 
       - name: Get apio 'definitions' package dir
         run: |
