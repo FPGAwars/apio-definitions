@@ -37,7 +37,9 @@ jobs:
 
       - name: Get apio 'definitions' package dir
         run: |
-          apio_packages_dir=$(apio api get-system | jq -r '.system["apio-packages-dir"]')
+          apio api get-system --output ./_apio_api_system.json
+          cat -n ./_apio_api_system.json
+          apio_packages_dir=$(jq -r '.system["apio-packages-dir"]' ./_apio_api_system.json)
           echo "APIO_PACKAGES_DIR=$apio_packages_dir" >> $GITHUB_ENV
           apio_definitions_dir="${apio_packages_dir}/definitions"
           echo "APIO_DEFINITIONS_DIR=$apio_definition_dir" >> $GITHUB_ENV
