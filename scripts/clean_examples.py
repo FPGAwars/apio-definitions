@@ -17,12 +17,12 @@ assert examples_dir.is_dir(), examples_dir
 for board in glob("*", root_dir=examples_dir):
     board_dir = examples_dir / board
     for example in glob("*", root_dir=board_dir):
-       example_dir = board_dir / example  
+        example_dir = board_dir / example
 
-       # -- Change to example directory.
-       print(f"cd {example_dir}")
-       os.chdir(example_dir)
+        # -- Change to example directory.
+        print(f"cd {example_dir}")
+        os.chdir(example_dir)
 
-       # -- Run 'apio clean'. We don't check the status.
-       print(f"apio clean")
-       os.system("apio clean")
+        # -- Run 'apio clean'. We don't check the status.
+        print("apio clean")
+        os.system("apio clean")

@@ -6,10 +6,8 @@ source files.
 Do not run directly, run format_examples.py from repo's root.
 """
 
-from pathlib import Path
 import os
 from pathlib import Path
-import os
 from glob import glob
 
 

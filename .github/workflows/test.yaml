@@ -53,7 +53,7 @@ jobs:
       # Copy the common examples files to the examples.
       - name: Apply common example files
         run: |
-          python ./script/copy-common-examples-files.py
+          python ./scripts/copy_common_examples_files.py
 
       # Overwrite the examples in the installed apio package with the ones
       # from this repo.
@@ -98,6 +98,8 @@ jobs:
           cd test-project
           apio build
 
+      # -- We want to make sure we test the patched ones in the apio package
+      # -- and not the ones the repo.
       - name: Delete local examples
         run: |
           ls -al
@@ -106,6 +108,4 @@ jobs:
 
       - name: Test the patched examples
         run: |
-          test_script=$(realpath ./scripts/test-examples.py)
-          cd $APIO_DEFINITIONS_DIR
-          python $test_script
+          python ./scripts/test_examples.py --examples-root $APIO_DEFINITIONS_DIR/examples

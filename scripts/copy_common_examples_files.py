@@ -15,8 +15,16 @@ Usage:
 """
 
 import shutil
+import argparse
 from pathlib import Path
 import sys
+
+parser = argparse.ArgumentParser(description="Copy or clean common example files")
+parser.add_argument("--dry-run", action="store_true",
+                    help="Show what would happen without making changes")
+parser.add_argument("--clean", action="store_true",
+                    help="Delete common files from examples instead of copying")
+args = parser.parse_args()
 
 
 COMMON_DIR = Path("common-examples-files")
@@ -24,6 +32,7 @@ EXAMPLES_DIR = Path("examples")
 
 
 def get_targets():
+    """Get list of all examples directories."""
     return [
         p for board in EXAMPLES_DIR.iterdir() if board.is_dir()
         for p in board.iterdir() if p.is_dir()
@@ -57,13 +66,7 @@ def process_one_example(example_dir: Path, dry_run: bool, clean: bool) -> int:
 
 
 def main():
-    import argparse
-    parser = argparse.ArgumentParser(description="Copy or clean common example files")
-    parser.add_argument("--dry-run", action="store_true",
-                        help="Show what would happen without making changes")
-    parser.add_argument("--clean", action="store_true",
-                        help="Delete common files from examples instead of copying")
-    args = parser.parse_args()
+    """Main"""
 
     if not COMMON_DIR.exists():
         print(f"Error: Directory not found: {COMMON_DIR}")
