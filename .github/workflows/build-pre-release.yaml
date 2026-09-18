@@ -15,6 +15,9 @@ permissions:
 
 env:
   # These are set latter in the workflow
+  REPO: ""
+  REPO_BRANCH: ""
+  REPO_COMMIT: ""
   RELEASE_TAG: ""
   PACKAGE_TAG: ""
 
@@ -43,7 +46,9 @@ jobs:
         uses: fpgawars/apio-workflows/.github/actions/get-repo-info@main
         with:
           repo-dir: .
-          commit-var: RELEASE_COMMIT
+          repo-var: REPO
+          branch-var: REPO_BRANCH
+          commit-var: REPO_COMMIT
 
       - name: Determine package file name
         run: |
@@ -59,12 +64,13 @@ jobs:
             "description" : "Apio definitions package",
             "release-tag":  "$RELEASE_TAG",
             "target-platform":  "all",
-            "build-repo":  "${{github.repository}}",
+            "repo":  "${REPO}",
+            "repo-branch":  "${REPO_BRANCH}",
+            "repo-commit":  "${REPO_COMMIT}",
             "build-workflow":  "${{ github.workflow }}",
             "workflow-run-id":  "${{github.run_id}}",
             "workflow-run-number": "${{github.run_number}}",
             "build-time":  "$(date +'%Y-%m-%d %H:%M:%S %Z')",
-            "commit":  "$RELEASE_COMMIT",
             "file-name":  "$PACKAGE_NAME"
           }
           EOF
@@ -114,9 +120,9 @@ jobs:
           $(cat build-info.txt)
           \`\`\`
 
-          - [Cutoff commit](https://github.com/${{ github.repository }}/commit/${RELEASE_COMMIT})
+          - [Cutoff commit](https://github.com/${REPO}/commit/${REPO_COMMIT})
 
-          - [Generated pre-release](https://github.com/${{ github.repository }}/releases/tag/${RELEASE_TAG})
+          - [Generated pre-release](https://github.com/${REPO}/releases/tag/${RELEASE_TAG})
           EOF
 
           ls -al
