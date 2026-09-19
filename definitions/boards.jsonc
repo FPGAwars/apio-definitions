@@ -1392,5 +1392,21 @@
       "vid": "09fb",
       "pid": "6001"
     }
+  },
+  // https://www.amd.com/en/products/adaptive-socs-and-fpgas/evaluation-boards/ek-v7-vc707-g.html
+  // openFPGALoader has no vc707 board preset (it has vc709), so the on-board
+  // Digilent JTAG is named directly; 15 MHz is what it is reliable at.
+  "vc707": {
+    "description": "VC707 (Xilinx, Virtex7)",
+    "fpga-id": "xc7vx485tffg1761-2",
+    "programmer": {
+      "id": "openfpgaloader",
+      "extra-args": "--cable digilent --freq 15000000"
+    },
+    "usb": {
+      "vid": "0403",
+      "pid": "6010",
+      "product-regex": "^Digilent Adept USB Device"
+    }
   }
 }
