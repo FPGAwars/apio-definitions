@@ -33,7 +33,7 @@ Whenever possible, every board in `boards.jsonc` should have an example named `b
 
 **No duplicate blinkies:** don't add another example that only blinks an LED under a different name. An example that blinks is fine when it shows an additional concept, and its name and `info` should say which, e.g. several `apio.ini` envs (`multi-env`), SystemVerilog (`blinky-sv`), a PLL (`pll`), or programming to flash or RAM (`flash-and-ram`).
 
-**Correctness:** add a `blinky` only when there is a good chance it's correct on the real board. Take the clock pin and frequency and the LED pin from a reliable source: the board maker's schematic, user guide or constraint files, or a well-maintained platform file such as LiteX's `litex-boards`. Name the source in the constraint file when it isn't obvious. Don't guess. **Unknown LED polarity** doesn't block a `blinky`, since a blinking LED looks the same either way. Create it anyway, and write `polarity unknown` in the port comment and the constraint file (`output led,  // The blinking LED, polarity unknown.`). Use the single-LED template, so the design drives only the LED that blinks. Driving the board's other LEDs to a fixed value could turn them on. If a board can't be tested on hardware, end its `info` with `(untested)`, e.g. `Blinks an LED (untested).` But don't mark an example `(untested)` when it reasonably follows an example that was tested on the same board (one whose `info` has no `(untested)`): the same clock pin and frequency, and the same LED pins and polarity.
+**Correctness:** add a `blinky` only when there is a good chance it's correct on the real board. Take the clock pin and frequency and the LED pin from a reliable source: the board maker's schematic, user guide or constraint files, or a well-maintained platform file such as LiteX's `litex-boards`. Name the source in the constraint file when it isn't obvious. Don't guess. **Unknown LED polarity** doesn't block a `blinky`, since a blinking LED looks the same either way. Create it anyway, and write `polarity unknown` in the port comment and the constraint file (`output led,  // The blinking LED, polarity unknown.`). Use the single-LED template, so the design drives only the LED that blinks. Driving the board's other LEDs to a fixed value could turn them on. If a board can't be tested on hardware, end its `info` with `(untested)`, e.g. `Blinks an LED (untested)` But don't mark an example `(untested)` when it reasonably follows an example that was tested on the same board (one whose `info` has no `(untested)`): the same clock pin and frequency, and the same LED pins and polarity.
 
 Boards with examples but no `blinky` yet:
 - `kefir`: its clock is a socketed oscillator whose frequency depends on the part fitted, and HX parts have no internal oscillator.
@@ -60,7 +60,7 @@ Names:
 
 ### `info`
 
-Every example must have an `info` file in its root dir. It holds exactly one line of text that describes the example, with no leading or trailing spaces.
+Every example must have an `info` file in its root dir. It holds exactly one line of text that describes the example, with no leading or trailing spaces. Don't end it with a period (`Blinks an LED`, not `Blinks an LED.`).
 
 - **Hard limits:** 10 to 100 characters. `test_examples.py` fails outside them.
 - **Length goal:** 40 characters or less. A longer line isn't an error, but it is highly discouraged. Write a new or reworked `info` in 40 characters, and go over only when a shorter line can't describe the example.
