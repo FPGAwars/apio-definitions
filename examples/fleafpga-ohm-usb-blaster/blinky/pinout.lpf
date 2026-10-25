@@ -1,0 +1,12 @@
+# Constraint file of the blinky example for the FleaFPGA Ohm board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses. The pins are from the board's
+# test design (FleaFPGA_Ohm_A5.lpf).
+
+# Clock (25MHz).
+LOCATE COMP "sys_clk" SITE "H2";
+IOBUF  PORT "sys_clk" IO_TYPE=LVCMOS25;
+
+# Status LED, active low.
+LOCATE COMP "led" SITE "P2";
+IOBUF  PORT "led" PULLMODE=NONE IO_TYPE=LVCMOS25;

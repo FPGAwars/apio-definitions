@@ -1,0 +1,20 @@
+# Constraint file of the buttons example for the iCEBreaker board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# On-board button, active low.
+set_io btn_n 10  # input
+
+# Buttons on the snap-off PMOD, active high.
+set_io btns[0] 20  # input, BTN1
+set_io btns[1] 19  # input, BTN2
+set_io btns[2] 18  # input, BTN3
+
+# On-board LEDs, active low.
+set_io leds_n[0] 11  # output, red
+set_io leds_n[1] 37  # output, green
+
+# LEDs on the snap-off PMOD, active high.
+set_io pmod_leds[0] 23  # output, LED4
+set_io pmod_leds[1] 26  # output, LED1
+set_io pmod_leds[2] 21  # output, LED5

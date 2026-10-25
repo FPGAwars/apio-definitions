@@ -8,7 +8,7 @@ module main #(
     parameter integer DIV = 8_000_000
 ) (
     input      ext_clk,  // 12MHz clock
-    output reg led       // The blinking LED.
+    output reg led       // The blinking LED, active high.
 );
 
   // The 48MHz main clock, and a flag that is high once the PLL

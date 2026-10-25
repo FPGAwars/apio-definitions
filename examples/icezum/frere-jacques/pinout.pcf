@@ -1,0 +1,3 @@
+set_io buzzers[0] 119
+set_io buzzers[1] 118
+set_io sys_clk  21

@@ -1,0 +1,21 @@
+# Constraint file of the blinky example for the Cynthion r1.4 board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Clock (60MHz).
+LOCATE COMP "sys_clk" SITE "A8";
+IOBUF  PORT "sys_clk" IO_TYPE=LVCMOS33;
+
+# FPGA LEDs, active low.
+LOCATE COMP "leds_n[0]" SITE "E13";
+LOCATE COMP "leds_n[1]" SITE "C13";
+LOCATE COMP "leds_n[2]" SITE "B14";
+LOCATE COMP "leds_n[3]" SITE "A15";
+LOCATE COMP "leds_n[4]" SITE "D12";
+LOCATE COMP "leds_n[5]" SITE "C11";
+IOBUF  PORT "leds_n[0]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "leds_n[1]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "leds_n[2]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "leds_n[3]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "leds_n[4]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "leds_n[5]" IO_TYPE=LVCMOS33;

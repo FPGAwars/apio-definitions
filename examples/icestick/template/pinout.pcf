@@ -1,0 +1,6 @@
+# Constraint file of the template example for the iCEstick board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# LED (D1, red), active high.
+set_io led 99  # output

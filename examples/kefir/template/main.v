@@ -1,16 +1,10 @@
-//------------------------------------------------------------------
-//-- Verilog template
-//-- Top entity
-//-- Board: Kéfir I
-//------------------------------------------------------------------
-`default_nettype none
-
-//-- Template for the top entity
-module top (
-    output wire LED1
+// Project template for the Kéfir I board. Start a new design by
+// changing this one. It turns on one LED.
+module main (
+    output led  // Active high.
 );
 
-  //-- Turn on the LED1 on the board
-  assign LED1 = 1'b1;
+  // Turn on the LED.
+  assign led = 1'b1;
 
 endmodule

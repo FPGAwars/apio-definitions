@@ -58,6 +58,7 @@
       "product-regex": "Digilent USB Device"
     }
   },
+  // TODO: Add a link to the board's home page.
   "arice1": {
     "description": "ARiCE v1",
     "fpga-id": "ice40up5k-sg48",
@@ -84,7 +85,7 @@
       "product-regex": "^--.. Azukar FPGA ..--"
     }
   },
-  // URL: TBD
+  // https://github.com/mystorm-org/BlackIce
   "blackice": {
     "description": "BlackIce",
     "fpga-id": "ice40hx4k-tq144-8k",
@@ -165,6 +166,7 @@
       "extra-args": "-c ft232 -v --file-type bin"
     }
   },
+  // https://github.com/q3k/chubby75/tree/master/5a-75b
   "colorlight-5a-75b-v61": {
     "description": "ColorLight-5A-75B-V61",
     "fpga-id": "lfe5u-25f-6bg381c",
@@ -173,6 +175,7 @@
       "extra-args": "-c ft2232 -v --file-type bin"
     }
   },
+  // https://github.com/q3k/chubby75/tree/master/5a-75b
   "colorlight-5a-75b-v7": {
     "description": "ColorLight-5A-75B-V7",
     "fpga-id": "lfe5u-25f-6bg256c",
@@ -181,6 +184,7 @@
       "extra-args": "-c ft2232 -v --file-type bin"
     }
   },
+  // https://github.com/q3k/chubby75/tree/master/5a-75b
   "colorlight-5a-75b-v8": {
     "description": "ColorLight-5A-75B-V8",
     "fpga-id": "lfe5u-25f-6bg256c",
@@ -189,6 +193,7 @@
       "extra-args": "-c ft2232 -v --file-type bin"
     }
   },
+  // https://github.com/q3k/chubby75/tree/master/5a-75e
   "colorlight-5a-75e-v6": {
     "description": "ColorLight-5A-75E-V6",
     "fpga-id": "lfe5u-25f-6bg256c",
@@ -197,6 +202,7 @@
       "extra-args": "-c ft2232 -v --file-type bin"
     }
   },
+  // https://github.com/q3k/chubby75/tree/master/5a-75e
   "colorlight-5a-75e-v71-ft2232h": {
     "description": "ColorLight-5A-75E-V71",
     "fpga-id": "lfe5u-25f-6bg256c",
@@ -205,6 +211,7 @@
       "extra-args": "-c ft2232 -v --file-type bin"
     }
   },
+  // https://github.com/q3k/chubby75/tree/master/5a-75e
   "colorlight-5a-75e-v71-ft232h": {
     "description": "ColorLight-5A-75E-V71",
     "fpga-id": "lfe5u-25f-6bg256c",
@@ -213,6 +220,7 @@
       "extra-args": "-c ft232 -v --file-type bin"
     }
   },
+  // https://github.com/q3k/chubby75/tree/master/5a-75e
   "colorlight-5a-75e-v71-usb-blaster": {
     "description": "ColorLight-5A-75E-V71",
     "fpga-id": "lfe5u-25f-6bg256c",
@@ -241,6 +249,7 @@
     }
   },
   // Same as above, but writing to RAM.
+  // https://github.com/wuxx/Colorlight-FPGA-Projects
   "colorlight-i5-v7-0-ram": {
     "description": "ColorLight-i5 (RAM)",
     "fpga-id": "lfe5u-25f-6bg381c",
@@ -287,6 +296,7 @@
   //     "extra-args": "-c usb-blaster -v --file-type bin"
   //   }
   // },
+  // https://github.com/wuxx/Colorlight-FPGA-Projects/blob/master/colorlight_i9_v7.x.md
   "colorlight-i9-v7-2-ft2232h": {
     "description": "ColorLight-i9",
     "fpga-id": "lfe5u-45f-6bg381c",
@@ -295,6 +305,7 @@
       "extra-args": "-c ft2232 -v --file-type bin"
     }
   },
+  // https://github.com/wuxx/Colorlight-FPGA-Projects/blob/master/colorlight_i9_v7.x.md
   "colorlight-i9-v7-2-ft232h": {
     "description": "ColorLight-i9",
     "fpga-id": "lfe5u-45f-6bg381c",
@@ -303,6 +314,7 @@
       "extra-args": "-c ft232 -v --file-type bin"
     }
   },
+  // https://github.com/wuxx/Colorlight-FPGA-Projects/blob/master/colorlight_i9_v7.x.md
   "colorlight-i9-v7-2-usb-blaster": {
     "description": "ColorLight-i9",
     "fpga-id": "lfe5u-45f-6bg381c",
@@ -311,6 +323,7 @@
       "extra-args": "-c usb-blaster -v --file-type bin"
     }
   },
+  // https://github.com/wuxx/Colorlight-FPGA-Projects/blob/master/colorlight_i9_v7.x.md
   "colorlight-i9-v7-2-cmsis-dap": {
     "description": "ColorLight-i9",
     "fpga-id": "lfe5u-45f-6bg381c",
@@ -319,6 +332,7 @@
       "extra-args": "-c cmsisdap -v --file-type bin"
     }
   },
+  // https://github.com/greatscottgadgets/cynthion-hardware
   "cynthion-r1-4": {
     "description": "Cynthion r1.4",
     "fpga-id": "lfe5u-12f-6bg256c",
@@ -326,6 +340,7 @@
       "id": "apollo"
     }
   },
+  // https://www.latticesemi.com/Products/DevelopmentBoardsAndKits/ECP5EvaluationBoard
   "ecp5-evaluation-board": {
     "description": "ECP5-Evaluation-Board",
     "fpga-id": "lfe5um5g-85f-8bg381c",
@@ -334,6 +349,7 @@
       "extra-args": "-c ft2232 -v --file-type bin"
     }
   },
+  // TODO: Add a link to the board's home page.
   "ecp5-mini-12": {
     "description": "ECP5-Mini-12",
     "fpga-id": "lfe5u-12f-6bg256c",
@@ -342,6 +358,7 @@
       "extra-args": "-c ft2232 -v --file-type bin"
     }
   },
+  // TODO: Add a link to the board's home page.
   "ecp5-mini-25": {
     "description": "ECP5-Mini-12",
     "fpga-id": "lfe5u-25f-6bg256c",
@@ -350,6 +367,7 @@
       "extra-args": "-c ft2232 -v --file-type bin"
     }
   },
+  // https://github.com/ciaa/Hardware/tree/master/PCB/EDU-FPGA
   "edu-ciaa-fpga": {
     "description": "EDU-CIAA-FPGA",
     "fpga-id": "ice40hx4k-tq144-8k",
@@ -375,6 +393,7 @@
       "pid": "6010"
     }
   },
+  // https://github.com/Basman74/FleaFPGA-Ohm
   "fleafpga-ohm-ft2232h": {
     "description": "FleaFPGA-Ohm_(FT2232H)",
     "fpga-id": "lfe5u-25f-6bg381c",
@@ -383,6 +402,7 @@
       "extra-args": "-c ft2232 -v --file-type bin"
     }
   },
+  // https://github.com/Basman74/FleaFPGA-Ohm
   "fleafpga-ohm-ft232h": {
     "description": "FleaFPGA-Ohm_(FT232H)",
     "fpga-id": "lfe5u-25f-6bg381c",
@@ -391,6 +411,7 @@
       "extra-args": "-c ft232 -v --file-type bin"
     }
   },
+  // https://github.com/Basman74/FleaFPGA-Ohm
   "fleafpga-ohm-usb-blaster": {
     "description": "FleaFPGA-Ohm_(USB-Blaster)",
     "fpga-id": "lfe5u-25f-6bg381c",
@@ -399,6 +420,7 @@
       "extra-args": "-c usb-blaster -v --file-type bin"
     }
   },
+  // https://github.com/cheyao/icepi-zero
   "icepi-zero": {
     "description": "Icepi Zero",
     "fpga-id": "lfe5u-25f-6bg256c",
@@ -420,7 +442,7 @@
       "product-regex": "^Fomu Hacker running DFU Bootloader v1.8.8"
     }
   },
-  // TBD
+  // https://oshpark.com/shared_projects/4fdnrTJk
   "fpga101": {
     "description": "FPGA 101 - Workshop Badge",
     "fpga-id": "ice40up5k-sg48",
@@ -584,6 +606,7 @@
       "product-regex": "^(Dual RS232-HS)|(Lattice FTUSB Interface Cable)"
     }
   },
+  // https://github.com/wuxx/icesugar
   "icesugar-1-5": {
     "description": "iCESugar v1.5",
     "fpga-id": "ice40up5k-sg48",
@@ -595,6 +618,7 @@
       "pid": "602b"
     }
   },
+  // https://github.com/wuxx/icesugar-nano
   "icesugar-nano": {
     "description": "iCESugar-nano",
     "fpga-id": "ice40lp1k-cm36",
@@ -626,6 +650,7 @@
     }
   },
   // Same as above but writing to ram.
+  // https://github.com/wuxx/icesugar-pro
   "icesugar-pro-ram": {
     "description": "Icesugar Pro (RAM)",
     "fpga-id": "lfe5u-25f-6bg256c",
@@ -712,6 +737,7 @@
       "product-regex": "^Milk JTAG:u"
     }
   },
+  // https://numato.com/docs/mimas-ecp5-mini-fpga-development-board/
   "mimas-ecp5-mini": {
     "description": "Mimas ECP5 Mini",
     "fpga-id": "lfe5u-45f-6bg256c",
@@ -732,6 +758,7 @@
       "pid": "6014"
     }
   },
+  // https://github.com/WiFiBoy/OK-iCE40Pro
   "ok-ice40pro": {
     "description": "OK-iCE40Pro",
     "fpga-id": "ice40up5k-sg48",
@@ -778,6 +805,7 @@
       "id": "pi-sicle-loader"
     }
   },
+  // https://github.com/tinyvision-ai-inc/pico-ice
   "pico-ice": {
     "description": "pico-ice",
     "fpga-id": "ice40up5k-sg48",
@@ -791,6 +819,7 @@
       "product-regex": "^DFU flash"
     }
   },
+  // https://wiki.sipeed.com/hardware/en/tang/Tang-Nano/Nano.html
   "sipeed-tang-nano": {
     "description": "Sipeed Tang Nano",
     "fpga-id": "gw1n-lv1qn48c6-i5",
@@ -803,6 +832,7 @@
       "pid": "6010"
     }
   },
+  // https://wiki.sipeed.com/hardware/en/tang/Tang-Nano-1K/Nano-1k.html
   "sipeed-tang-nano-1k": {
     "description": "Sipeed Tang Nano 1k",
     "fpga-id": "gw1nz-lv1qn48c6-i5",
@@ -815,6 +845,7 @@
       "pid": "6010"
     }
   },
+  // https://wiki.sipeed.com/hardware/en/tang/tang-nano-20k/nano-20k.html
   "sipeed-tang-nano-20k": {
     "description": "Sipeed Tang Nano 20k",
     "fpga-id": "gw2ar-lv18qn88c8-i7",
@@ -827,6 +858,7 @@
       "pid": "6010"
     }
   },
+  // https://wiki.sipeed.com/hardware/en/tang/Tang-Nano-4K/Nano-4K.html
   "sipeed-tang-nano-4k": {
     "description": "Sipeed Tang Nano 4k",
     "fpga-id": "gw1nsr-lv4cqn48pc7-i6",
@@ -839,6 +871,7 @@
       "pid": "6010"
     }
   },
+  // https://wiki.sipeed.com/hardware/en/tang/Tang-Nano-9K/Nano-9K.html
   "sipeed-tang-nano-9k": {
     "description": "Sipeed Tang Nano 9k",
     "fpga-id": "gw1nr-lv9qn88pc6-i5",
@@ -851,6 +884,7 @@
       "pid": "6010"
     }
   },
+  // https://wiki.sipeed.com/hardware/en/tang/tang-primer-20k/primer-20k.html
   "sipeed-tang-primer-20k": {
     "description": "Sipeed Tang Primer 20k",
     "fpga-id": "gw2a-lv18pg256c8-i7",
@@ -863,7 +897,7 @@
       "pid": "6010"
     }
   },
-  // URL: TBD
+  // https://www.crowdsupply.com/ashoktinkeringlabs/soan-papdi
   "soan-papdi": {
     "description": "Soan-Papdi",
     "fpga-id": "ice40up5k-sg48",
@@ -876,6 +910,7 @@
       "product-regex": "^Soan Papdi.*"
     }
   },
+  // TODO: Add a link to the board's home page.
   "soan-papdi-mini": {
     "description": "Soan-Papdi-Mini",
     "fpga-id": "ice40up5k-sg48",
@@ -888,6 +923,7 @@
       "product-regex": "^Soan Papdi Mini.*"
     }
   },
+  // https://github.com/vsdip/VSDSquadron_FM
   "vsdsquadron-fm": {
     "description": "VSDSquadron FPGA Mini",
     "fpga-id": "ice40up5k-sg48",
@@ -900,6 +936,7 @@
       "product-regex": "^.*Single RS232.*"
     }
   },
+  // https://github.com/theta-machines/eth4k-hardware
   "thetamachines-eth4k": {
     "description": "Theta Machines ETH4K",
     "fpga-id": "ice40hx4k-tq144-8k",
@@ -912,6 +949,7 @@
       "product-regex": "^ETH4K"
     }
   },
+  // https://github.com/tinyfpga/TinyFPGA-B-Series
   "tinyfpga-b2": {
     "description": "TinyFPGA B2",
     "fpga-id": "ice40lp8k-cm81",
@@ -1016,7 +1054,7 @@
       "pid": "6015"
     }
   },
-  // TBD
+  // https://github.com/gtjennings1/UPDuino_v1_0
   "upduino": {
     "description": "UPDuino v1.0",
     "fpga-id": "ice40up5k-sg48",
@@ -1029,7 +1067,7 @@
       "product-regex": "^Single RS232-HS"
     }
   },
-  // TBD
+  // https://github.com/gtjennings1/UPDuino_v2_0
   "upduino2": {
     "description": "UPDuino v2.0",
     "fpga-id": "ice40up5k-sg48",

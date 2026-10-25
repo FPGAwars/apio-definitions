@@ -1,0 +1,11 @@
+# Constraint file of the blinky example for the ECP5 Versa board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Clock (100MHz), from an LVDS oscillator on the P3/P4 pair.
+LOCATE COMP "sys_clk" SITE "P3";
+IOBUF  PORT "sys_clk" IO_TYPE=LVDS;
+
+# LED, active low. Its bank runs at 2.5V.
+LOCATE COMP "led" SITE "E16";
+IOBUF  PORT "led" PULLMODE=NONE IO_TYPE=LVCMOS25 DRIVE=4;

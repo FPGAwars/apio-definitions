@@ -6,10 +6,14 @@
 #   invoke --list         # Show available tasks
 #   invoke -l             # Show available tasks
 #   invoke lint           # Format and lint the python code.
-#   invoke test           # Test the examples of the current dir, or all.
+#   invoke test           # Test the examples.
 #   invoke format         # Format the examples' Verilog files.
-#   invoke copy-common    # Copy the common files into every example.
+#   invoke copy-common    # Copy the common files into the examples.
 #   invoke clean          # Clean the examples and other temporary files.
+#
+# The tasks that work on examples (test, format, copy-common, clean) pick
+# them from the current dir: in a board dir that board's examples, in an
+# example dir (or below it) that example, and anywhere else all of them.
 
 #  NOTE: The shortcut 'inv' can be used instead of 'invoke'.
 
@@ -97,8 +101,13 @@ def cout(*args, markup=False, highlight=False, **kwargs):
     console.print(*args, markup=markup, highlight=highlight, **kwargs)
 
 
-def announce_task(task_name: str) -> None:
-    """Prints a message saying that the task is starting."""
+def announce_task(ctx: Context, task_name: str) -> None:
+    """Prints a message saying that the task is starting. Every task calls
+    it first. The tasks don't support Invoke's --dry option, so it aborts
+    if it's given."""
+    if ctx.config.run.dry:
+        cout("The --dry option is not supported.", style="red bold")
+        sys.exit(1)
     cout(
         f"Executing Apio definitions dev task: {task_name}",
         style="magenta bold",
@@ -128,56 +137,10 @@ def delete_path(path: Path) -> None:
         path.unlink()
 
 
-def get_example_dirs() -> list[Path]:
-    """Return the dirs of all the examples, sorted. Examples are at
-    examples/<board>/<example>."""
-    examples_dir = get_repo_root() / "examples"
-    assert examples_dir.is_dir(), examples_dir
-    return sorted(
-        example_dir
-        for board_dir in examples_dir.iterdir()
-        if board_dir.is_dir()
-        for example_dir in board_dir.iterdir()
-        if example_dir.is_dir()
-    )
-
-
-def run(ctx: Context, cmd: list[str], cwd: Path | None = None) -> None:
-    """Run a command, in dir 'cwd' if specified. Abort if it returns an
-    error code."""
-    dry_run: bool = ctx.config.run.dry
-    prefix = "DRY: " if dry_run else ""
-    # -- Show the dir relative to the repo root, e.g. [examples/x/y].
-    where = f"[{cwd.relative_to(get_repo_root()).as_posix()}] " if cwd else ""
-    cout(f"{prefix}{where}{' '.join(cmd)}", style="cyan")
-    if not dry_run:
-        result: CompletedProcess = subprocess.run(cmd, cwd=cwd, check=False)
-        if result.returncode != 0:
-            cout("Command failed.", style="red bold")
-            sys.exit(1)
-
-
-# ===================== Tasks definitions start here ==========================
-
-
-@task(name="lint", aliases=["l"])
-def lint_task(ctx: Context):
-    """Format and lint the python code."""
-    announce_task("lint")
-    # -- Paths are relative to the repo root.
-    os.chdir(get_repo_root())
-    lint_items = ["scripts", "tasks.py"]
-    run(ctx, [PYTHON, "-m", "black", "--line-length", "79", *lint_items])
-    run(ctx, [PYTHON, "-m", "pylint", *lint_items])
-    run(ctx, [PYTHON, "-m", "mypy", *lint_items])
-    if not ctx.config.run.dry:
-        cout("Lint passed.", style="green bold")
-
-
 def examples_selection(examples_dir: Path) -> str | None:
-    """Select the examples to test from the current dir. Returns
+    """Select the examples to work on from the current dir. Returns
     '<board>' in a board dir, '<board>/<example>' in an example dir or
-    below it, and None (test all) anywhere else."""
+    below it, and None (all examples) anywhere else."""
     cwd = Path.cwd().resolve()
     examples_dir = examples_dir.resolve()
     if not cwd.is_relative_to(examples_dir):
@@ -186,6 +149,64 @@ def examples_selection(examples_dir: Path) -> str | None:
     if not parts:
         return None
     return "/".join(parts[:2])
+
+
+def selection_name(selection: str | None) -> str:
+    """A name of the selection for messages."""
+    return selection or "all examples"
+
+
+def get_example_dirs(selection: str | None) -> list[Path]:
+    """Return the dirs of the repo's examples, sorted. Examples are at
+    examples/<board>/<example>. 'selection' is a value returned by
+    examples_selection(). If it's None, return all the examples."""
+    examples_dir = get_repo_root() / "examples"
+    assert examples_dir.is_dir(), examples_dir
+    example_dirs = sorted(
+        example_dir
+        for board_dir in examples_dir.iterdir()
+        if board_dir.is_dir()
+        for example_dir in board_dir.iterdir()
+        if example_dir.is_dir()
+    )
+    if selection:
+        parts = tuple(selection.split("/"))
+        example_dirs = [
+            example_dir
+            for example_dir in example_dirs
+            if example_dir.relative_to(examples_dir).parts[: len(parts)]
+            == parts
+        ]
+    assert example_dirs, f"No examples found for {selection}"
+    return example_dirs
+
+
+def run(cmd: list[str], cwd: Path | None = None) -> None:
+    """Run a command, in dir 'cwd' if specified. Abort if it returns an
+    error code."""
+    # -- Show the dir relative to the repo root, e.g. [examples/x/y].
+    where = f"[{cwd.relative_to(get_repo_root()).as_posix()}] " if cwd else ""
+    cout(f"{where}{' '.join(cmd)}", style="cyan")
+    result: CompletedProcess = subprocess.run(cmd, cwd=cwd, check=False)
+    if result.returncode != 0:
+        cout("Command failed.", style="red bold")
+        sys.exit(1)
+
+
+# ===================== Tasks definitions start here ==========================
+
+
+@task(name="lint", aliases=["l"])
+def lint_task(ctx: Context):
+    """Format and lint the python code."""
+    announce_task(ctx, "lint")
+    # -- Paths are relative to the repo root.
+    os.chdir(get_repo_root())
+    lint_items = ["scripts", "tasks.py"]
+    run([PYTHON, "-m", "black", "--line-length", "79", *lint_items])
+    run([PYTHON, "-m", "pylint", *lint_items])
+    run([PYTHON, "-m", "mypy", *lint_items])
+    cout("Lint passed.", style="green bold")
 
 
 @task(
@@ -199,7 +220,7 @@ def examples_selection(examples_dir: Path) -> str | None:
 def test_task(ctx: Context, examples_root: str | None = None):
     """Test the examples. In a board dir it tests that board's examples, in
     an example dir it tests that example, and anywhere else all of them."""
-    announce_task("test")
+    announce_task(ctx, "test")
     # -- Make apio read boards.jsonc, fpgas.jsonc and programmers.jsonc
     # -- from this repo instead of from the installed definitions package.
     # -- The apio commands that the test script runs inherit this env var.
@@ -225,56 +246,66 @@ def test_task(ctx: Context, examples_root: str | None = None):
         cmd += ["--example", selection]
     # -- The scripts use paths relative to the repo root.
     os.chdir(get_repo_root())
-    run(ctx, cmd)
-    if not ctx.config.run.dry:
-        cout(f"Passed: {selection or 'all examples'}.", style="green bold")
+    run(cmd)
+    cout(f"Passed: {selection_name(selection)}.", style="green bold")
 
 
 @task(name="format", aliases=["f"])
 def format_task(ctx: Context):
-    """Format the examples' Verilog code."""
-    announce_task("format")
-    for example_dir in get_example_dirs():
-        run(ctx, ["apio", "format"], cwd=example_dir)
-    if not ctx.config.run.dry:
-        cout("All examples formatted.", style="green bold")
+    """Format the examples' Verilog code. Picks the examples from the
+    current dir, like 'invoke test'."""
+    announce_task(ctx, "format")
+    selection = examples_selection(get_repo_root() / "examples")
+    cout(f"Formatting: {selection_name(selection)}", style="cyan")
+    for example_dir in get_example_dirs(selection):
+        run(["apio", "format"], cwd=example_dir)
+    cout(f"Formatted: {selection_name(selection)}.", style="green bold")
 
 
-@task(
-    name="copy-common",
-    aliases=["cc"],
-    help={
-        "dry_run": "Show what would change without changing anything.",
-    },
-)
-def copy_common_task(ctx: Context, dry_run=False):
-    """Copy the common files into every example."""
-    announce_task("copy-common")
+@task(name="copy-common", aliases=["cc"])
+def copy_common_task(ctx: Context):
+    """Copy the common files into the examples. Picks the examples from
+    the current dir, like 'invoke test'."""
+    announce_task(ctx, "copy-common")
+    # -- Pick the examples from the current dir, before we change it.
+    selection = examples_selection(get_repo_root() / "examples")
+    cout(f"Copying common files: {selection_name(selection)}", style="cyan")
     # -- The scripts use paths relative to the repo root.
     os.chdir(get_repo_root())
     cmd = [PYTHON, f"scripts{sep}copy_common_examples_files.py"]
-    if dry_run:
-        cmd.append("--dry-run")
-    run(ctx, cmd)
+    if selection:
+        cmd += ["--example", selection]
+    run(cmd)
 
 
 @task(name="clean", aliases=["c", "cl"])
 def clean_task(ctx: Context):
-    """Clean artifacts and temporary files."""
-    announce_task("clean")
+    """Clean artifacts and temporary files. Picks the examples from the
+    current dir, like 'invoke test'."""
+    announce_task(ctx, "clean")
     repo_root = get_repo_root()
     assert isinstance(repo_root, Path)
+
+    # -- Pick the examples from the current dir, before we change it.
+    selection = examples_selection(repo_root / "examples")
+    cout(f"Cleaning: {selection_name(selection)}", style="cyan")
 
     # -- The scripts use paths relative to the repo root.
     os.chdir(repo_root)
 
-    # -- Run 'apio clean' in each example.
-    for example_dir in get_example_dirs():
-        run(ctx, ["apio", "clean"], cwd=example_dir)
+    # -- Run 'apio clean' in each selected example.
+    for example_dir in get_example_dirs(selection):
+        run(["apio", "clean"], cwd=example_dir)
 
     # -- Delete the common files that 'invoke copy-common' copied into
-    # -- the examples.
-    run(ctx, [PYTHON, f"scripts{sep}copy_common_examples_files.py", "--clean"])
+    # -- the selected examples.
+    cmd = [PYTHON, f"scripts{sep}copy_common_examples_files.py", "--clean"]
+    if selection:
+        cmd += ["--example", selection]
+    run(cmd)
+
+    # -- The Python caches below belong to the tooling, not to the
+    # -- examples, so they are always deleted from the whole repo.
 
     # -- Collect other items to delete.
     items: list[Path] = []
@@ -287,8 +318,7 @@ def clean_task(ctx: Context):
         print("No other items to delete.")
         return
 
-    dry_run: bool = ctx.config.run.dry
-    print("Would delete:" if dry_run else "Deleting:")
+    print("Deleting:")
 
     for item in items:
         # -- E.g. if we hit a __pycache__ under .mypy_cache but already
@@ -298,5 +328,4 @@ def clean_task(ctx: Context):
 
         description = "{repo}/" + str(item.relative_to(repo_root))
         print(f"[{'d' if item.is_dir() else 'f'}] {description}")
-        if not dry_run:
-            delete_path(item)
+        delete_path(item)

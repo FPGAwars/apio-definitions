@@ -1,0 +1,9 @@
+# Constraint file of the blinky example for the iCEblink40-HX1K board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Clock (3.33MHz).
+set_io sys_clk 13  # input
+
+# LED, active high. This is LED2.
+set_io led 59  # output

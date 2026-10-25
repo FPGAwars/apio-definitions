@@ -1,0 +1,20 @@
+// Constraint file of the rgb-led example for the Sipeed Tang Nano 1K board.
+// It assigns the design's signals to FPGA pins, and lists only
+// the pins that this example uses. The pins are from the official Sipeed
+// example at https://github.com/sipeed/TangNano-1K-examples/tree/main/example_led
+
+// Clock (27MHz).
+IO_LOC  "sys_clk" 47;
+IO_PORT "sys_clk" IO_TYPE=LVCMOS33 PULL_MODE=UP;
+
+// Button A, active low (on-board pull-up).
+IO_LOC  "btn_n" 13;
+IO_PORT "btn_n" IO_TYPE=LVCMOS33 PULL_MODE=UP;
+
+// RGB LED, active low.
+IO_LOC  "rgb_led_n[0]" 9;   // Red.
+IO_LOC  "rgb_led_n[1]" 11;  // Green.
+IO_LOC  "rgb_led_n[2]" 10;  // Blue.
+IO_PORT "rgb_led_n[0]" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8;
+IO_PORT "rgb_led_n[1]" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8;
+IO_PORT "rgb_led_n[2]" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8;

@@ -1,48 +1,32 @@
 [*]
-[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Thu Aug 27 04:59:18 2026
+[*] GTKWave save file for main_tb.v, used by 'apio sim'.
 [*]
-[dumpfile] "/Users/user/work/_build/blink-slow/main_tb.vcd"
-[dumpfile_mtime] "Thu Aug 27 04:57:48 2026"
-[dumpfile_size] 1111
-[savefile] "/Users/user/work/main_tb.gtkw"
 [timestart] 0
-[size] 1152 717
+[size] 1000 600
 [pos] -1 -1
-*-18.086729 966000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[treeopen] testbench.
+*-16.786717 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] main_tb.
 [sst_width] 253
-[signals_width] 177
+[signals_width] 160
 [sst_expanded] 1
-[sst_vpaned_height] 194
+[sst_vpaned_height] 158
 @28
-testbench.CLK
+[color] 1
+main_tb.assertion_err
+@420
+main_tb.clk_num
+@28
+main_tb.sys_clk
 @200
 -
+-Counter
 @24
-testbench.dut.counter[31:0]
+main_tb.dut.counter[3:0]
 @200
 -
-@800022
-testbench.expected_leds[3:0]
-@29
-(0)testbench.expected_leds[3:0]
-@28
-(1)testbench.expected_leds[3:0]
-(2)testbench.expected_leds[3:0]
-(3)testbench.expected_leds[3:0]
-@1001200
--group_end
-@200
--
-@800022
-testbench.LEDS[3:0]
-@28
-(0)testbench.LEDS[3:0]
-(1)testbench.LEDS[3:0]
-(2)testbench.LEDS[3:0]
-(3)testbench.LEDS[3:0]
-@1001200
--group_end
+-LEDs
+@22
+[color] 2
+main_tb.leds_n[3:0]
 [pattern_trace] 1
 [pattern_trace] 0

@@ -3,8 +3,8 @@
 // diamond 3.10 or higher is likely to abort with error about unable to use feedback signal
 // cause of this could be from wrong CPHASE/FPHASE parameters
 module pll (
-    input  clkin,    // 25 MHz, 0 deg
-    output clkout0,  // 120 MHz, 0 deg
+    input  clock_in,   // 25 MHz, 0 deg
+    output clock_out,  // 120 MHz, 0 deg
     output locked
 );
 
@@ -34,9 +34,9 @@ module pll (
   ) pll_i (
       .RST(1'b0),
       .STDBY(1'b0),
-      .CLKI(clkin),
-      .CLKOP(clkout0),
-      .CLKFB(clkout0),
+      .CLKI(clock_in),
+      .CLKOP(clock_out),
+      .CLKFB(clock_out),
       .CLKINTFB(),
       .PHASESEL0(1'b0),
       .PHASESEL1(1'b0),
@@ -52,8 +52,8 @@ module pll (
 
   // Implementation for simulation (pass through)
 
-  assign locked  = 1'b1;
-  assign clkout0 = clkin;
+  assign locked = 1'b1;
+  assign clock_out = clock_in;
 
 `endif
 

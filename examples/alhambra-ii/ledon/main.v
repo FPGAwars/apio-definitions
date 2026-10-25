@@ -2,7 +2,7 @@
 // leds[0] and turns off the other LEDs.
 
 module main (
-    output [7:0] leds  // leds[0] is on, the rest are off.
+    output [7:0] leds  // leds[0] is on, the rest are off. Active high.
 );
 
   // leds[0] on, the other LEDs off.

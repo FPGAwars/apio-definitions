@@ -1,23 +1,16 @@
-# -----------------------------------------------------------------------------
-#- Blinky example for the Alchitry-Cu board (cb132)
-#- Constraint file (.pcf)
-#- By Reid Holderfield
-#- April - 2023
-#- GPL license
-# -----------------------------------------------------------------------------
-# --  Pinout:
-# --  Guide:
+# Constraint file of the blinky example for the Alchitry Cu board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
 
+# ------------ System clock (100MHz) ------------------------------------------
+set_io sys_clk P7  # input
 
-# clk
-set_io  clk     P7  #81_gbin5
-
-# leds
-set_io  led[0]  J11 #D2
-set_io  led[1]  K11 #..
-set_io  led[2]  K12 #..
-set_io  led[3]  K14 #..
-set_io  led[4]  L12 #..
-set_io  led[5]  L14 #..
-set_io  led[6]  M12 #..
-set_io  led[7]  N14 #D9
+# ------------ User Leds (active high) ----------------------------------------
+set_io leds[0] J11  # output
+set_io leds[1] K11  # output
+set_io leds[2] K12  # output
+set_io leds[3] K14  # output
+set_io leds[4] L12  # output
+set_io leds[5] L14  # output
+set_io leds[6] M12  # output
+set_io leds[7] N14  # output

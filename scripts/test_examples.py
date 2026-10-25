@@ -45,10 +45,7 @@ EXAMPLES_DIR = args.examples_root.absolute()
 NAME_REGEX = r"^[a-z][a-z0-9-]*$"
 
 # List of examples that are known to break the Verible formatter.
-NO_FORMAT_EXAMPLES = [
-    "fomu/blink",
-    "icezum/marcha-imperial",
-]
+NO_FORMAT_EXAMPLES: list[str] = []
 
 
 def read_file_lines(file: Union[str, Path]) -> List[str]:

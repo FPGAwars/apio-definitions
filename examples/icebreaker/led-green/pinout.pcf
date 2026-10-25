@@ -1,0 +1,14 @@
+# Constraint file of the led-green example for the iCEBreaker board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# On-board LEDs, active low.
+set_io leds_n[0] 11  # output, red
+set_io leds_n[1] 37  # output, green
+
+# LEDs on the snap-off PMOD, active high.
+set_io pmod_leds[0] 26  # output, LED1
+set_io pmod_leds[1] 27  # output, LED2
+set_io pmod_leds[2] 25  # output, LED3
+set_io pmod_leds[3] 23  # output, LED4
+set_io pmod_leds[4] 21  # output, LED5

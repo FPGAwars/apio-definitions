@@ -1,3 +1,5 @@
+// Divides a clock by 4, with two outputs a quarter period apart (0 and
+// 90 degrees).
 module clock_divider (
     input clock_in,
     output reg clock_div4_0 = 0,

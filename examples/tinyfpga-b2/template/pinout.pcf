@@ -1,0 +1,14 @@
+# Constraint file of the template example for the TinyFPGA B2 board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Clock (16MHz).
+set_io sys_clk B4  # input, pin 3
+
+# LED, active high. The board has no user LED, so wire one from pin 13 to
+# GND through a resistor.
+set_io led J1  # output, pin 13
+
+# USB pins, held low.
+set_io usb_dp A3  # output, pin 1
+set_io usb_dn A4  # output, pin 2

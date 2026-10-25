@@ -1,0 +1,11 @@
+# Constraint file of the leds example for the Olimex iCE40HX1K-EVB board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Push buttons, active low.
+set_io btns_n[0] 41  # input, BUT1
+set_io btns_n[1] 42  # input, BUT2
+
+# LEDs, active high.
+set_io leds[0] 40  # output, LED1
+set_io leds[1] 51  # output, LED2

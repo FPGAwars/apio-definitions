@@ -6,23 +6,25 @@ This repo has a few Python tools for testing and maintaining the examples: Invok
 
 ## Invoke tasks (`tasks.py`)
 
-`tasks.py` is modeled on the one in the Apio repo. It needs Invoke (`pip install invoke`). Run `invoke --list` to see the tasks, and `invoke --dry <task>` to print a task's commands without running them.
+`tasks.py` is modeled on the one in the Apio repo. It needs Invoke (`pip install invoke`). Run `invoke --list` to see the tasks. The tasks don't support Invoke's `--dry` option and exit with an error if it's given, and the scripts have no dry-run option.
 
 | Task | Alias | What it does |
 |---|---|---|
 | `invoke lint` | `l` | Formats the Python code in `scripts/` and `tasks.py` with black, then checks it with pylint and mypy. |
-| `invoke test` | `t` | Runs `test_examples.py` on the examples picked by the current dir (see below), using this repo's definitions (see below). Option `--examples-root <dir>` tests the examples in another dir. |
-| `invoke format` | `f` | Runs `apio format` in every example, which formats the Verilog with Verible. |
-| `invoke copy-common` | `cc` | Runs `copy_common_examples_files.py`. Option `--dry-run` shows what would change without changing anything. |
-| `invoke clean` | `c` | Runs `apio clean` in every example, deletes the common files from the examples (`copy_common_examples_files.py --clean`), and deletes the `.mypy_cache` and `__pycache__` dirs. |
+| `invoke test` | `t` | Runs `test_examples.py` on the selected examples, using this repo's definitions (see below). Option `--examples-root <dir>` tests the examples in another dir. |
+| `invoke format` | `f` | Runs `apio format` in each selected example, which formats the Verilog with Verible. |
+| `invoke copy-common` | `cc` | Runs `copy_common_examples_files.py` on the selected examples. |
+| `invoke clean` | `c` | Runs `apio clean` in each selected example and deletes the common files from them (`copy_common_examples_files.py --clean`). It also deletes the `.mypy_cache` and `__pycache__` dirs of the whole repo, since they belong to the Python tooling, not to the examples. |
 
-`invoke test` decides what to test from the dir it runs in:
+The tasks that work on examples (`test`, `format`, `copy-common` and `clean`) select the examples from the dir they run in. Each one prints what it selected. `lint` doesn't work on examples, so it ignores the current dir.
 
-| Run from | Tests |
+| Run from | Selected examples |
 |---|---|
 | A board dir (`examples/<board>`) | That board's examples |
 | An example dir (`examples/<board>/<example>`) or a dir inside it | That example |
 | Anywhere else | All the examples |
+
+So after editing `common-examples-files/`, run `invoke copy-common` from the repo root to update all the examples. The CI workflows run the tasks from the repo root, so they always work on all the examples.
 
 `invoke test` runs `test_examples.py` with the env var `APIO_DEFINITIONS` set to this repo's `definitions/` dir. Every `apio` command the script runs then reads `boards.jsonc`, `fpgas.jsonc` and `programmers.jsonc` from this repo instead of from the installed definitions package. Other content of the installed package, such as its examples, is still used from the package. This needs an Apio version that supports `APIO_DEFINITIONS`. If `APIO_DEFINITIONS` is already set to another dir, `invoke test` fails.
 
@@ -36,7 +38,7 @@ For each env of each example, it runs `apio build`, `lint`, `lint --nosynth`, `g
 
 To check one example by hand, `cd examples/<board>/<example>` and run the same `apio` commands, e.g. `apio build -e <env>`, `apio test`, `apio format`.
 
-**`copy_common_examples_files.py`** copies the shared files into every example (see "Common example files" below). Option `--dry-run` shows what would change, and `--clean` removes the copied files.
+**`copy_common_examples_files.py`** copies the shared files into every example (see "Common example files" below). Option `--clean` removes the copied files. Option `--example <board>` or `--example <board>/<example>` processes only that board's examples or only that example.
 
 ## Deleting files in Python code
 

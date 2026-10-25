@@ -8,7 +8,7 @@ module main #(
     parameter integer CLKS_PER_CYCLE = `CLKS_PER_CYCLE
 ) (
     input  sys_clk,  // 12MHz (Alhambra II) or 27MHz (Tang Nano 9K) clock
-    output led       // The blinking LED.
+    output led       // The blinking LED. Active high on Alhambra II, low on Tang Nano 9K.
 );
 
   // The counter counts this many clocks between LED toggles,

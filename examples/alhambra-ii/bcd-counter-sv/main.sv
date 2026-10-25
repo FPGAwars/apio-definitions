@@ -8,7 +8,7 @@ module main #(
     parameter int DIV = 12_000_000
 ) (
     input  logic       sys_clk,  // 12MHz clock
-    output logic [7:0] leds      // The two BCD digits.
+    output logic [7:0] leds      // The two BCD digits, active high.
 );
 
   // Power-on reset: sys_rst is high for the first 3 clocks.

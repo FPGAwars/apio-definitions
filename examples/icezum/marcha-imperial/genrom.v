@@ -1,43 +1,43 @@
 //----------------------------------------------------------------------------
-//-- Memoria ROM genérica
+//-- Generic ROM.
 //------------------------------------------
 //-- (C) BQ. October 2015. Written by Juan Gonzalez (Obijuan)
 //-- GPL license
 //----------------------------------------------------------------------------
-//-- Memoria con los siguientes parametros:
-//--  * AW: Numero de bits de las direcciones
-//--  * DW: Numero de bits de los datos
-//--  * ROMFILE: Fichero a usar para cargar la memoria
+//-- A memory with these parameters:
+//--  * AW: Number of address bits.
+//--  * DW: Number of data bits.
+//--  * ROMFILE: The file to load into the memory.
 //--
-//-- Con este componente podemos hacer memorias rom de cualquier tamaño
+//-- With this module we can make ROMs of any size.
 //----------------------------------------------------------------------------
 
-module genrom #(  //-- Parametros
-    //-- Parametro: Nombre del fichero con el contenido de la ROM
+module genrom #(  //-- Parameters
+    //-- Parameter: name of the file with the ROM's contents.
     parameter ROMFILE = "rom1.list",
-    parameter AW = 5,  //-- Bits de las direcciones (Adress width)
+    parameter AW = 5,  //-- Address bits (address width).
     parameter DW = 4
-)  //-- Bits de los datos (Data witdh)
+)  //-- Data bits (data width).
 
 (  //-- Puertos
-    input                clk,   //-- Señal de reloj global
-    input  wire [AW-1:0] addr,  //-- Direcciones
+    input                sys_clk,  //-- The global clock.
+    input  wire [AW-1:0] addr,     //-- Address.
     output reg  [DW-1:0] data
-);  //-- Dato de salida
+);  //-- Output data.
 
-  //-- Calcular el numero de posiciones totales de memoria
+  //-- Compute the total number of memory locations.
   localparam NPOS = 2 ** AW;
 
-  //-- Memoria
+  //-- The memory.
   reg [DW-1:0] rom[0:NPOS-1];
 
-  //-- Lectura de la memoria
-  always @(posedge clk) begin
+  //-- Read the memory.
+  always @(posedge sys_clk) begin
     data <= rom[addr];
   end
 
-  //-- Cargar en la memoria el fichero ROMFILE
-  //-- Los valores deben estan dados en hexadecimal
+  //-- Load the file ROMFILE into the memory.
+  //-- The values must be in hexadecimal.
   initial begin
     $readmemh(ROMFILE, rom);
   end

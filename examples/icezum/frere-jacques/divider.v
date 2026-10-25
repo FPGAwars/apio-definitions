@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-//-- Divisor de frecuencia generico
+//-- Generic frequency divider.
 //-- (c) BQ. August 2015. written by Juan Gonzalez (obijuan)
 //-----------------------------------------------------------------------------
 //-- GPL license
@@ -7,35 +7,35 @@
 
 `include "divider.vh"
 
-//-- Entrada: clk_in. Señal original
-//-- Salida: clk_out. Señal de frecuencia 1/M de la original
+//-- Input: clk_in, the original signal.
+//-- Output: clk_out, a signal at 1/M of the original frequency.
 module divider (
     input  wire clk_in,
     output wire clk_out
 );
 
-  //-- Valor por defecto del divisor
+  //-- Default divider value.
   //-- Lo ponemos a 1 Hz
   parameter  M = `F_2KHz;
 
-  //-- Numero de bits para almacenar el divisor
-  //-- Se calculan con la funcion de verilog $clog2, que nos devuelve el 
-  //-- numero de bits necesarios para representar el numero M
-  //-- Es un parametro local, que no se puede modificar al instanciar
+  //-- Number of bits to hold the divider.
+  //-- It's computed with the Verilog function $clog2, which returns the 
+  //-- number of bits needed to represent the number M.
+  //-- It's a local parameter, which can't be changed when instantiating.
   localparam N = $clog2(M);
 
-  //-- Registro para implementar el contador modulo M
+  //-- Register for the modulo M counter.
   reg [N-1:0] divcounter = 0;
 
-  //-- Contador módulo M
+  //-- Modulo M counter.
   always @(posedge clk_in) divcounter <= (divcounter == M - 1) ? 0 : divcounter + 1;
 
-  //-- Sacar el bit mas significativo por clk_out
+  //-- Output the most significant bit on clk_out.
   assign clk_out = divcounter[N-1];
 
 endmodule
 
-//-- Contador módulo M: Otra manera de implementarlo
+//-- Modulo M counter: another way to write it.
 /*
 always @(posedge clk_in)
   if (divcounter == M - 1) 

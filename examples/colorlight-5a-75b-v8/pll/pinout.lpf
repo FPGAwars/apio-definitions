@@ -1,12 +1,11 @@
-# -- Board: ColorLight-5A-75E-V71_(FT2232H)
+# Constraint file of the pll example for the ColorLight 5A-75B V8.0 board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
 
-# -- ext_clk
+# Clock (25MHz).
 LOCATE COMP "ext_clk" SITE "P6";
 IOBUF  PORT "ext_clk" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;
 
-# -- LED
-LOCATE COMP "led" SITE "T6";
-IOBUF PORT "led" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;
-
-
-
+# LED, active low.
+LOCATE COMP "led_n" SITE "T6";
+IOBUF  PORT "led_n" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;

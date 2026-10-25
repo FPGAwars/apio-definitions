@@ -1,11 +1,6 @@
-# -----------------------------------------------------------------------------
-#- iceWerx constraint file (.pcf)
-#- By Juan Gonzalez (Obijuan) 
-#- April - 2022
-#- GPL license
-# -----------------------------------------------------------------------------
+# Constraint file of the ledon example for the iCEWerx board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
 
-
-# ------------ User Leds ------------------------------------------------------
-#-- Red LED
-set_io --warn-no-port LEDR A5  # output
+# Red LED, active low.
+set_io led_n A5  # output

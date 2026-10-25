@@ -8,7 +8,7 @@ module main #(
     parameter integer N = `N
 ) (
     input        sys_clk,  // 12MHz clock
-    output [1:0] leds      // The two LEDs, always one on and one off.
+    output [1:0] leds      // The two LEDs, always one on and one off. Active high.
 );
 
   // Counts clocks from 0 to N-1. It starts at 0 when the FPGA is

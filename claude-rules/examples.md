@@ -10,19 +10,38 @@ Each example is a standalone Apio project. Users fetch it with `apio examples fe
 
 `alhambra-ii/blinky/main.v` shows the style.
 
+**Language:** write everything in an example in English: comments, signal and module names, `info`, README files, and comments in `apio.ini` and constraint files. Translate non-English text when reworking an example. Names and quotes that are part of the content, such as a song title, can stay as they are, and so can solfege note names (`DO_4`, `SOL_4`).
+
 ## Which rules apply
 
-The rules in this file are a mix of what `test_examples.py` enforces and repo conventions. Many existing examples predate the conventions. Apply the rules to new examples and to examples you rework. Don't fix other examples unless asked. Where a rule says how many examples follow it today, rename or rewrite the others only when asked or when already reworking that example.
+The rules in this file are a mix of what `test_examples.py` enforces and repo conventions. As of 2026-10-25 all the examples follow these rules. Apply the rules to new examples and to examples you change.
 
 ## The `blinky` example
 
-Every board should have an example named `blinky` that blinks an LED at about 1 Hz. It is the board's "hello world", so keep it as simple as possible: a clock divider driving one LED, plus its testbench. `alhambra-ii/blinky` is the reference.
+Whenever possible, every board in `boards.jsonc` should have an example named `blinky` that blinks an LED at about 1 Hz. It is the board's "hello world", so keep it as simple as possible: a clock divider driving one LED, plus its testbench. `alhambra-ii/blinky` is the reference.
 
-Boards without a `blinky` yet:
-- `fomu` (it has `blink` instead)
-- `ice40-hx1k-evb`, `ice40-hx8k-evb`, `ice40-hx8k`
-- `icestick`, `icezum`, `kefir`
-- `soan-papdi-mini`, which has no examples at all yet
+**Consistency:** keep each `blinky` as close as possible to the other boards' `blinky` examples. Start from the closest existing one and change only what the board needs: the board ID, the pins, the clock frequency, the counter width `N` (pick it so the LED toggles about every 0.5 to 1 second) and the LED polarity comments. Keep the file names, module and signal names, comments, testbench and `.gtkw` file the same. The templates:
+
+| Board has | Start from |
+|---|---|
+| One LED and a clock pin | `colorlight-5a-75e-v71-ft232h/blinky` |
+| Several LEDs and a clock pin | `alhambra-ii/blinky` |
+| Several active-low LEDs and a clock pin | `cynthion-r1-4/blinky` (`leds_n`, inverted once) |
+| No usable clock pin, iCE40UP5K RGB LED | `upduino3/blinky` (`SB_HFOSC`, `SB_RGBA_DRV`) |
+| No usable clock pin, other iCE40 with `SB_HFOSC` | `odt-icyblue-feather/blinky` |
+| No usable clock pin, ECP5 | `ecp5-evaluation-board/blinky` (`OSCG`) |
+
+**No duplicate blinkies:** don't add another example that only blinks an LED under a different name. An example that blinks is fine when it shows an additional concept, and its name and `info` should say which, e.g. several `apio.ini` envs (`multi-env`), SystemVerilog (`blinky-sv`), a PLL (`pll`), or programming to flash or RAM (`flash-and-ram`).
+
+**Correctness:** add a `blinky` only when there is a good chance it's correct on the real board. Take the clock pin and frequency and the LED pin from a reliable source: the board maker's schematic, user guide or constraint files, or a well-maintained platform file such as LiteX's `litex-boards`. Name the source in the constraint file when it isn't obvious. Don't guess. **Unknown LED polarity** doesn't block a `blinky`, since a blinking LED looks the same either way. Create it anyway, and write `polarity unknown` in the port comment and the constraint file (`output led,  // The blinking LED, polarity unknown.`). Use the single-LED template, so the design drives only the LED that blinks. Driving the board's other LEDs to a fixed value could turn them on. If a board can't be tested on hardware, end its `info` with `(untested)`, e.g. `Blinks an LED (untested).` But don't mark an example `(untested)` when it reasonably follows an example that was tested on the same board (one whose `info` has no `(untested)`): the same clock pin and frequency, and the same LED pins and polarity.
+
+Boards with examples but no `blinky` yet:
+- `kefir`: its clock is a socketed oscillator whose frequency depends on the part fitted, and HX parts have no internal oscillator.
+
+Boards with no examples at all, as of 2026-10-25, because no reliable pinout or schematic was found:
+- `arice1`, `icenode`, `pi-sicle`, `soan-papdi-mini`, `thetamachines-eth4k`, `ecp5-mini-12`, `ecp5-mini-25`
+- `blackice-mx`: the only schematic found shows just the carrier board's connectors.
+- `tinyfpga-ex-rev1`, `tinyfpga-ex-rev2`: the netlist doesn't show the user LED connected to an FPGA ball.
 
 ## Files in an example
 
@@ -44,7 +63,7 @@ Names:
 Every example must have an `info` file in its root dir. It holds exactly one line of text that describes the example, with no leading or trailing spaces.
 
 - **Hard limits:** 10 to 100 characters. `test_examples.py` fails outside them.
-- **Length goal:** 40 characters or less. A longer line isn't an error, but it is highly discouraged. Write a new or reworked `info` in 40 characters, and go over only when a shorter line can't describe the example. Today 4 of the 112 `info` files are longer than 40 characters.
+- **Length goal:** 40 characters or less. A longer line isn't an error, but it is highly discouraged. Write a new or reworked `info` in 40 characters, and go over only when a shorter line can't describe the example.
 
 ### `apio.ini`
 
@@ -63,7 +82,7 @@ Every Apio project needs an `apio.ini` at the top of its dir, and all the exampl
 - **Which env runs:** the `--env` flag if given, else `[apio] default-env`, else the first env listed.
 - **Required in each env** (directly or through `[common]`):
   - `board`: must be a known board. In each example, at least one env's `board` must be the board of its parent dir. Examples for several boards are allowed.
-  - `top-module`: name the top module `main`, not an example-specific name like `blinky`. Today 61 of the 112 examples still use other names (`blinky`, `Test`, `top`, ...).
+  - `top-module`: name the top module `main`, not an example-specific name like `blinky`.
 - **Common optional options:**
   - `constraint-file`: needed only if the example doesn't have exactly one file with the FPGA family's constraint extension.
   - `default-testbench`: the testbench `apio sim` opens when run without arguments. Set it when the example has more than one testbench.
@@ -84,9 +103,8 @@ Every Apio project needs an `apio.ini` at the top of its dir, and all the exampl
   | gowin | `.cst` | `IO_LOC "leds[0]" T6;` |
   | xilinx | `.xdc` | `[get_ports {leds[0]}]` |
 
-  Today 38 of the 114 constraint files are named `pinout.*`. The others use board or example names (`leds.pcf`, `blinky.cst`, `<board>.xdc`, ...).
 - **Several constraint files:** an example that needs more than one selects one per env with `constraint-file = ...` in `apio.ini`. See `alhambra-ii/constraint-files` and `alhambra-ii/multi-board`.
-- **Contents:** define only the pins the example uses. Other board pins may also be listed as a reference, as long as they're commented out and their definitions are correct. Many existing constraint files still define every board pin uncommented (e.g. with `set_io -nowarn`).
+- **Contents:** define only the pins the example uses. Other board pins may also be listed as a reference, as long as they're commented out and their definitions are correct.
 
 ## Verilog design rules
 
@@ -95,8 +113,9 @@ Every Apio project needs an `apio.ini` at the top of its dir, and all the exampl
 Name the design's main clock `sys_clk`:
 - **Without a PLL**, or with a PLL that keeps the same frequency, `sys_clk` is the external clock: name the top module's input `sys_clk` and use that name in the constraint file.
 - **With a PLL that changes the frequency**, `sys_clk` is the PLL's output clock, and the external clock input gets another name.
+- **With the FPGA's internal oscillator** and no clock pin, `sys_clk` is the oscillator's output, a wire in the top module. See "Internal oscillators" below.
 
-Testbenches drive `sys_clk` too. Many Gowin examples already do this (e.g. `sipeed-tang-nano-9k/blinky`). Others still use `CLK`, `clk`, etc.
+Testbenches drive `sys_clk` too, except with an internal oscillator.
 
 ### Reset
 
@@ -125,27 +144,72 @@ always @(posedge sys_clk) if (sys_rst) rst_cnt <= rst_cnt + 1;
 - For groups of LEDs, buttons, switches, etc., use one vector port (`output [7:0] leds`) rather than separate signals (`LED0` ... `LED7`). The constraint file then names each bit, e.g. `leds[0]` (see the table above).
 - Name modules, instances, signals and files in lowercase `snake_case`, and parameters in `UPPER_CASE` (`DIV`).
 - Name active-low signals with an `_n` suffix (`btn_n`). Invert active-low board signals once, in the top module, so the rest of the design is active-high.
+- **Polarity:** polarity matters only for signals connected to board pins, since the design is active high inside. For each top-module port with an on/off meaning, such as an LED, button, switch, enable or chip select:
+  - **The name shows the polarity:** `_n` at the end means active low, no suffix means active high. The port comment doesn't need to repeat it.
+  - **Unknown polarity:** when it isn't known, say `polarity unknown` in the port comment (`output led,  // The blinking LED, polarity unknown.`), since a name can't express that.
+  - **Constraint file:** give each group of such pins one comment line with its polarity: active high, active low, or polarity unknown (`# LEDs, active low.`). The constraint file is where people look up the board's wiring, and it has no declarations to read the names from.
+  - **No polarity comments** for internal signals, or for signals without an on/off meaning, such as clocks, data buses, UART lines and digit selects.
+  - Existing port comments that also state the polarity are fine, and don't need to be removed.
+
+### Signal names
+
+Name the top module's ports, the signals connected to board pins, after their function, using the names below.
+
+- **Function, not board label:** use `leds[0]`, not the silkscreen label `D1` or `LED0`. Give the board label in the constraint file's comment instead: `set_io leds[0] 99  # output, D1`.
+- **Singular or vector:** a design that uses one item uses the singular name (`led`, `btn`). A design that uses several uses the plural as a vector starting at `[0]` (`leds[3:0]`, `btns[2:0]`), with `[0]` the first item in the board's own numbering. This depends on how many the design uses, not how many the board has.
+- **Active low:** add `_n` at the end (`led_n`, `leds_n`, `btn_n`, `rgb_led_n`).
+- **Several groups of the same kind:** prefix where they are (`pmod_leds`, `pmod_btns`).
+
+| Signal | Name |
+|---|---|
+| Main clock | `sys_clk`. The external clock input is `ext_clk` when a PLL changes the frequency. |
+| Reset | `sys_rst`, generated inside the design. A reset button is a button (`btn_n`). |
+| LEDs | `led`, `leds[N-1:0]` |
+| RGB LED | `rgb_led[2:0]`, with `[0]` = red, `[1]` = green, `[2]` = blue |
+| Push buttons | `btn`, `btns[N-1:0]` |
+| Switches | `sw`, `sws[N-1:0]` |
+| 7-segment display | `segs[6:0]` (segments a to g), `seg_dp`, digit selects `digits[N-1:0]` |
+| UART | `uart_tx`, `uart_rx`, as seen from the FPGA |
+| SPI | `spi_sck`, `spi_mosi`, `spi_miso`, `spi_cs_n`. Use `flash_` instead of `spi_` for the configuration flash. |
+| I2C | `i2c_scl`, `i2c_sda` |
+| USB | `usb_dp`, `usb_dn`, and `usb_pu` for the D+ pull-up |
+| Buzzer or speaker | `buzzer` |
+| Header pins | `gpio[N-1:0]`, or per connector, e.g. `pmod1[7:0]` |
+| Other board-specific signals | the chip or block, then the signal, e.g. `wifi_gpio0` |
 
 ### Code structure
 
 - **One module per file**, with the file named after the module (`ticker` in `ticker.v`).
 - **Timing constants are parameters:** make clock dividers, counter widths and delays module parameters. The default is the value for the real board, and testbenches override it with a small value so simulations run quickly. Examples: `DIV` in `alhambra-ii/bcd-counter`, `N` in `alhambra-ii/blinky`.
 - **Assignments:** in clocked `always @(posedge sys_clk)` blocks, use non-blocking `<=`. In combinational `always @(*)` blocks, use blocking `=`, and assign every output in every branch so no latches are inferred.
-- **Long numbers:** use `_` to group digits from the right: every 3 digits in decimal numbers of 5 or more digits (`12_000_000`, not `12000000`), and every 4 digits in hex and binary numbers longer than 4 digits (`32'hDEAD_BEEF`, `8'b1010_0101`). Short numbers such as `1000`, `8'hFF` and `4'b1010` stay as they are. Today most examples don't follow this.
+- **Long numbers:** use `_` to group digits from the right: every 3 digits in decimal numbers of 5 or more digits (`12_000_000`, not `12000000`), and every 4 digits in hex and binary numbers longer than 4 digits (`32'hDEAD_BEEF`, `8'b1010_0101`). Short numbers such as `1000`, `8'hFF` and `4'b1010` stay as they are. Generated tables, such as the note tables in `icezum/marcha-imperial/notegen.vh`, may keep the generator's format.
 - **Inputs:** pass button and switch inputs through a two flip-flop synchronizer clocked by `sys_clk` before using them. Debounce them when the design reacts to presses.
-- **Comments:** start each Verilog file with a one-to-three-line comment saying what the module does. In the top module, give the clock input's frequency in its port comment (`input sys_clk,  // 12MHz clock`).
+- **Comments:** start each Verilog file with a one-to-three-line comment saying what the module does. In the top module, give the clock input's frequency in its port comment (`input sys_clk,  // 12MHz clock`). With an internal oscillator, give it in the comment above the `sys_clk` wire.
 
 ### Vendor primitives that can't be simulated
 
-Some primitives, such as the PLLs `SB_PLL40_CORE` and `PLLE2_BASE`, can't be simulated. Wrap the primitive in `` `ifdef SYNTHESIS`` (Yosys defines `SYNTHESIS` during synthesis), and put a simple simulation model in the `` `else`` branch, so the same module works in testbenches. For a PLL, the model passes the input clock through and ties `locked` high.
+Some primitives can't be simulated: the PLLs `SB_PLL40_CORE` and `PLLE2_BASE`, the internal oscillators `SB_HFOSC` (iCE40UP5K) and `OSCG` (ECP5), and iCE40UP5K's RGB LED driver `SB_RGBA_DRV`. Yosys's simulation library has only empty shells for them. Wrap the primitive in `` `ifdef SYNTHESIS`` (Yosys defines `SYNTHESIS` during synthesis), and put a simple simulation model in the `` `else`` branch, so the same module works in testbenches. Give each wrapper its own file. The models:
+- **PLL:** passes the input clock through and ties `locked` high.
+- **Internal oscillator:** generates a 10 ns clock (see below).
+- **RGB LED driver:** `assign pins = ~on;`, since its pins are active low.
 
-See `pll.v` in `examples/alhambra-ii/pll` or `examples/arty-a7-35t/pll`. The PLL examples for `colorlight-5a-75b-v8`, `sipeed-tang-nano-9k` and `sipeed-tang-nano-20k` don't have this yet.
+See `pll.v` in `examples/alhambra-ii/pll` or `examples/arty-a7-35t/pll`, and `hf_osc.v` and `rgb_driver.v` in `examples/upduino3/blinky`. All the PLL examples follow this.
+
+### Internal oscillators
+
+Use the FPGA's internal oscillator (e.g. `SB_HFOSC`) only when the board has no clock pin that works without extra setup, e.g. when the clock needs a jumper, or comes from another chip whose firmware must output it.
+
+- **Simulation model:** the `` `else`` branch generates the clock itself with a 10 ns period: `reg sim_clk = 0; always #5 sim_clk = ~sim_clk; assign clk = sim_clk;`. This matches the testbench clock in the other examples, so timings and `.gtkw` zoom values stay comparable.
+- **`` `timescale``:** the model's `#5` needs a time unit, so put `` `timescale 1ns / 1ps`` in the oscillator wrapper's file too, not only in the testbench. The other design files don't need it. Apio runs Verilator with `-Wno-TIMESCALEMOD`, and Icarus doesn't warn either, so having it in only some files is fine.
+- **Testbench:** the design makes its own clock, so the testbench reads it instead of driving it: `wire sys_clk = dut.sys_clk;`. `clk_num` and the `.gtkw` file use this `sys_clk` as usual.
+
+`upduino3/blinky` and the other UP5K RGB LED blinky examples (`upduino`, `upduino2`, `upduino21`, `pico-ice`, `vsdsquadron-fm`, `fpga101`) and `odt-icyblue-feather/blinky` use this pattern, and so does `ecp5-evaluation-board/blinky` with the ECP5 `OSCG` (in `osc.v`). They were checked with `invoke test`.
 
 ## Lint and formatting
 
 - **Lint:** `apio lint` must report no warnings. It exits with an error on any Verilator warning, so `test_examples.py` already fails on them. Width-explicit constants (`4'd0` rather than `0` where widths differ) avoid most width warnings.
-- **Formatting:** all examples must be formatted with `apio format`, so that running it again changes no file. Run `apio format` in each example you add or edit, or `invoke format` for all. `test_examples.py` runs `apio format` but doesn't check for a diff, so check with `git diff` afterwards. As of 2026-10-22, every example passes this check.
-- **`NO_FORMAT_EXAMPLES`** in `test_examples.py` lists examples the test skips formatting for (`fomu/blink`, `icezum/marcha-imperial`). Both now format cleanly, so the list may be stale.
+- **Formatting:** all examples must be formatted with `apio format`, so that running it again changes no file. Run `apio format` in each example you add or edit, or `invoke format` from the repo root for all. `test_examples.py` runs `apio format` but doesn't check for a diff, so check with `git diff` afterwards. As of 2026-10-22, every example passes this check.
+- **`NO_FORMAT_EXAMPLES`** in `test_examples.py` lists examples the test skips formatting for. It's empty, since all the examples format cleanly.
 
 ## Testbenches
 
@@ -165,12 +229,12 @@ Write new testbenches, and testbenches you rewrite, to these rules.
 **Structure and names**
 
 5. Name the testbench module after its file (`bcd_digit_tb.v` holds `module bcd_digit_tb`). `$dumpvars` and the `.gtkw` signal paths use this name.
-6. Name the instance of the module under test `dut` (e.g. `main dut (...)`), so signal paths are always `<tb>.dut.<signal>`. Today 25 of the 81 testbenches do this.
+6. Name the instance of the module under test `dut` (e.g. `main dut (...)`), so signal paths are always `<tb>.dut.<signal>`.
 7. Give each submodule with non-trivial logic its own testbench next to its source file (e.g. `bcd/bcd_digit_tb.v` and `util/ticker_tb.v` in `alhambra-ii/bcd-counter`).
 
 **Clock and timing**
 
-8. Use `` `timescale 1ns / 1ps`` and a 10 ns clock (`always #5 sys_clk = ~sys_clk;`), so timings and `.gtkw` zoom values are comparable across examples.
+8. Use `` `timescale 1ns / 1ps`` and a 10 ns clock (`always #5 sys_clk = ~sys_clk;`), so timings and `.gtkw` zoom values are comparable across examples. With an internal oscillator, the design's simulation model makes the 10 ns clock and the testbench reads it (see "Internal oscillators" above).
 9. Declare a clock counter `clk_num` that increments on each rising edge of `sys_clk`. It's an `integer`, or an `int` in SystemVerilog: `integer clk_num = 0; always @(posedge sys_clk) clk_num <= clk_num + 1;`.
 10. Change inputs and check outputs away from the clock edge, e.g. `@(posedge sys_clk); #1;` before setting inputs or calling `EXPECT_EQ`. This avoids races between the testbench and the design.
 
@@ -221,7 +285,7 @@ endmodule
 
 ### Older testbenches
 
-Most existing testbenches predate these rules. 11 of them `` `include`` an `apio_testing.vh` or `apio_testing.svh` macro file and use its `` `EXPECT``, `` `TEST_BEGIN`` and `` `TEST_END`` macros. Don't copy that style into new testbenches.
+Older testbenches `` `include``d an `apio_testing.vh` or `apio_testing.svh` macro file and used its `` `EXPECT``, `` `TEST_BEGIN`` and `` `TEST_END`` macros. They were all rewritten to the rules above. Don't bring that style back.
 
 ## GTKWave save files (`<testbench>.gtkw`)
 

@@ -1,0 +1,6 @@
+# Constraint file of the template example for the IceZUM Alhambra board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# LED (LED0), active high.
+set_io led 95  # output

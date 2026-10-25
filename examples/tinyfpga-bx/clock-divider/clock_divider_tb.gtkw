@@ -1,26 +1,28 @@
 [*]
-[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Thu Dec  5 05:13:16 2024
+[*] GTKWave save file for clock_divider_tb.v, used by 'apio sim'.
 [*]
-[dumpfile] "/Volumes/projects/apio-examples/repo/examples/tinyfpga-bx/clock-divider/_build/clock_divider_tb.vcd"
-[dumpfile_mtime] "Thu Dec  5 05:11:25 2024"
-[dumpfile_size] 45675
-[savefile] "/Volumes/projects/apio-examples/repo/examples/tinyfpga-bx/clock-divider/clock_divider_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-15.388074 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-16.098 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] clock_divider_tb.
 [sst_width] 253
-[signals_width] 136
+[signals_width] 160
 [sst_expanded] 1
 [sst_vpaned_height] 158
-@29
-[color] 2
-clock_divider_tb.cdiv.clock_in
 @28
-clock_divider_tb.cdiv.clock_div2
-clock_divider_tb.cdiv.clock_div4_0
-clock_divider_tb.cdiv.clock_div4_90
+[color] 1
+clock_divider_tb.assertion_err
+@420
+clock_divider_tb.clk_num
+@28
+clock_divider_tb.sys_clk
+@200
+-
+-Divided clocks
+@28
+clock_divider_tb.dut.clock_div2
+clock_divider_tb.clock_div4_0
+clock_divider_tb.clock_div4_90
 [pattern_trace] 1
 [pattern_trace] 0

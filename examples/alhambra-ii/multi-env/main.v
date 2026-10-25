@@ -8,7 +8,7 @@ module main #(
     parameter integer CLK_DIV = `CLK_DIV
 ) (
     input        sys_clk,  // 12MHz clock
-    output [7:0] leds      // leds[7] blinks, the rest are off.
+    output [7:0] leds      // leds[7] blinks, the rest are off. Active high.
 );
 
   // The counter counts this many clocks between LED toggles,

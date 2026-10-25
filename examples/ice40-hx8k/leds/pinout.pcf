@@ -1,0 +1,13 @@
+# Constraint file of the leds example for the iCE40-HX8K Breakout board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# ------------ User Leds (active high) ----------------------------------------
+set_io leds[0] C3  # output
+set_io leds[1] B3  # output
+set_io leds[2] C4  # output
+set_io leds[3] C5  # output
+set_io leds[4] A1  # output
+set_io leds[5] A2  # output
+set_io leds[6] B4  # output
+set_io leds[7] B5  # output

@@ -8,7 +8,7 @@ module main #(
     parameter integer WIDTH = `WIDTH
 ) (
     input  sys_clk,  // 12MHz clock
-    output led       // The counter's top bit.
+    output led       // The counter's top bit, active high.
 );
 
   // The counter. It starts at 0 when the FPGA is configured.

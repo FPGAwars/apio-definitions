@@ -1,0 +1,9 @@
+# Constraint file of the blinky example for the iCESugar-nano board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Clock (12MHz). It comes from the iCELink chip, whose default is 12MHz.
+set_io sys_clk D1  # input
+
+# LED, active high.
+set_io led B6  # output

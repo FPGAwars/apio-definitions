@@ -1,0 +1,10 @@
+# Constraint file of the and-gate-sv example for the EDU-CIAA-FPGA board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Push buttons, polarity unknown.
+set_io btns[0] 31  # input, BTN1
+set_io btns[1] 32  # input, BTN2
+
+# LED0, active high.
+set_io led 1  # output

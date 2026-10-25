@@ -1,7 +1,7 @@
-//-- Marcha imperial. Compuesta por John Williams para Star Wars: A new hope.
-//-- Código original por Obijuan para open-fpga-verilog-tutorial Capítulo 27 [https://github.com/Obijuan/open-fpga-verilog-tutorial/wiki/Cap%C3%ADtulo-27%3A-Memoria-ROM-gen%C3%A9rica]
-//-- Remake del código original por JorFru: Ajuste a compases 4/4 y añadida la tercera parte de la melodía.
-0  //-- Un 0 es un SILENCIO
+//-- The Imperial March, composed by John Williams for Star Wars: A New Hope.
+//-- Original code by Obijuan for open-fpga-verilog-tutorial, chapter 27 [https://github.com/Obijuan/open-fpga-verilog-tutorial/wiki/Cap%C3%ADtulo-27%3A-Memoria-ROM-gen%C3%A9rica]
+//-- Remake of the original code by JorFru: adjusted to 4/4 bars, and added the third part of the melody.
+0  //-- A 0 is a rest.
 0
 0
 0
@@ -43,7 +43,7 @@
 3BCA
 3BCA
 0
-//----------- Segundo trozo
+//----------- Second part
 27E8  //-- RE_5
 27E8
 27E8
@@ -145,7 +145,7 @@
 27E8
 27E8
 0
-//--------------Tercer trozo se repite pero el ultimo compas es diferente
+//-------------- The third part repeats, but its last bar is different
 1DE5  //--SOL_5
 1DE5
 1DE5

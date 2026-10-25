@@ -1,8 +1,10 @@
-// Board details at
-// https://wiki.sipeed.com/hardware/en/tang/Tang-Nano-9K/Nano-9K.html
+// Constraint file of the speed-test example for the Sipeed Tang Nano 9K board.
+// It assigns the design's signals to FPGA pins, and lists only
+// the pins that this example uses.
 
-IO_LOC "CLK"   52;
+// Clock (27MHz).
+IO_LOC  "sys_clk" 52;
 IO_PORT "sys_clk" IO_TYPE=LVCMOS33 PULL_MODE=NONE;
 
-IO_LOC "LED"   10;
-
+// LED, active low.
+IO_LOC  "led_n" 10;

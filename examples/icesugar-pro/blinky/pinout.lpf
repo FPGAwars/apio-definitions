@@ -1,12 +1,11 @@
-# -- Board: IceSugar Pro (On board USB programmer)
+# Constraint file of the blinky example for the iCESugar-Pro board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
 
-# -- CLK
-LOCATE COMP "CLK" SITE "P6";
-IOBUF  PORT "CLK" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;
+# Clock (25MHz).
+LOCATE COMP "sys_clk" SITE "P6";
+IOBUF  PORT "sys_clk" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;
 
-# -- LED
+# LED, active low.
 LOCATE COMP "led" SITE "A11";
-IOBUF PORT "led" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4; 
-
-
-
+IOBUF  PORT "led" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;

@@ -1,0 +1,12 @@
+# Constraint file of the blinky example for the TinyFPGA BX board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Clock (16MHz).
+set_io sys_clk B2  # input
+
+# User/boot LED next to the power LED, active high.
+set_io led B3  # output
+
+# USB pull-up resistor, active high.
+set_io usb_pu A3  # output

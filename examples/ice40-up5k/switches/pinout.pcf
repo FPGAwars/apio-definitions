@@ -1,0 +1,13 @@
+# Constraint file of the switches example for the iCE40UP5K breakout board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Switches, polarity unknown.
+set_io sws[0] 43  # input, sw0
+set_io sws[1] 34  # input, sw1
+set_io sws[2] 25  # input, sw2
+
+# RGB LED, active low.
+set_io rgb_led_n[0] 41  # output, red
+set_io rgb_led_n[1] 40  # output, green
+set_io rgb_led_n[2] 39  # output, blue

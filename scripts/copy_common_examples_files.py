@@ -7,14 +7,16 @@ NOTE: Don't run this script directly. Run it via the invoke task
 
 Run from repository root.
 
-By default: actually copies common files
-Use --dry-run to see what would happen without changing anything
+By default it copies the common files into the examples.
+Use --clean to delete them from the examples instead.
+
+Use --example <board> or --example <board>/<example> to process only
+that board's examples or only that example.
 
 Usage:
-    ./process-common-files.py                 # actually copy (default)
-    ./process-common-files.py --dry-run       # show what would be copied
-    ./process-common-files.py --clean         # actually delete shared files
-    ./process-common-files.py --dry-run --clean  # show what would be deleted
+    ./process-common-files.py                 # copy (default)
+    ./process-common-files.py --clean         # delete shared files
+    ./process-common-files.py --example alhambra-ii/blinky  # one example
 """
 
 import shutil
@@ -26,14 +28,16 @@ parser = argparse.ArgumentParser(
     description="Copy or clean common example files"
 )
 parser.add_argument(
-    "--dry-run",
-    action="store_true",
-    help="Show what would happen without making changes",
-)
-parser.add_argument(
     "--clean",
     action="store_true",
     help="Delete common files from examples instead of copying",
+)
+parser.add_argument(
+    "--example",
+    type=str,
+    default=None,
+    help="Process only this board (e.g. alhambra-ii) or this example "
+    "(e.g. alhambra-ii/blinky)",
 )
 args = parser.parse_args()
 
@@ -45,15 +49,28 @@ EXAMPLES_DIR = Path("examples")
 REPO_DIR = Path(__file__).resolve().parent.parent
 
 
-def get_targets():
-    """Get list of all examples directories."""
-    return [
+def get_targets() -> list[Path]:
+    """Get the sorted list of example dirs to process. If --example is
+    given, only that board's examples or only that example."""
+    targets = sorted(
         p
         for board in EXAMPLES_DIR.iterdir()
         if board.is_dir()
         for p in board.iterdir()
         if p.is_dir()
-    ]
+    )
+    if args.example:
+        parts = tuple(args.example.strip("/").split("/"))
+        assert len(parts) in (1, 2), f"Invalid --example '{args.example}'"
+        targets = [
+            p
+            for p in targets
+            if p.relative_to(EXAMPLES_DIR).parts[: len(parts)] == parts
+        ]
+        if not targets:
+            print(f"Error: No examples found for --example {args.example}")
+            sys.exit(1)
+    return targets
 
 
 def delete_path(path: Path) -> None:
@@ -71,7 +88,7 @@ def delete_path(path: Path) -> None:
         path.unlink()
 
 
-def process_one_example(example_dir: Path, dry_run: bool, clean: bool) -> int:
+def process_one_example(example_dir: Path, clean: bool) -> int:
     """Process a single example directory: copy or delete common files."""
     count = 0
     for item in COMMON_DIR.iterdir():
@@ -79,24 +96,14 @@ def process_one_example(example_dir: Path, dry_run: bool, clean: bool) -> int:
 
         if clean:
             if dest.exists():
-                if dry_run:
-                    print(f"Would delete: {dest}")
-                else:
-                    delete_path(dest)
-                    print(f"Deleted: {dest}")
+                delete_path(dest)
+                print(f"Deleted: {dest}")
                 count += 1
         else:
-            if dry_run:
-                print(
-                    f"{'Would overwrite' if dest.exists() else 'Would copy'}: {dest}"
-                )
-            else:
-                if dest.exists():
-                    delete_path(dest)
-                (shutil.copytree if item.is_dir() else shutil.copy2)(
-                    item, dest
-                )
-                print(f"Copied: {dest}")
+            if dest.exists():
+                delete_path(dest)
+            (shutil.copytree if item.is_dir() else shutil.copy2)(item, dest)
+            print(f"Copied: {dest}")
             count += 1
     return count
 
@@ -114,16 +121,11 @@ def main():
         return
 
     action = "DELETE" if args.clean else "COPY"
-    mode = "DRY RUN" if args.dry_run else "APPLYING"
-    print(
-        f"{mode} — {action} common files → {len(targets)} example directories\n"
-    )
+    print(f"{action} common files → {len(targets)} example directories\n")
 
     total_count = 0
     for example_dir in targets:
-        total_count += process_one_example(
-            example_dir, args.dry_run, args.clean
-        )
+        total_count += process_one_example(example_dir, args.clean)
 
     verb = "deleted" if args.clean else "copied"
     print(

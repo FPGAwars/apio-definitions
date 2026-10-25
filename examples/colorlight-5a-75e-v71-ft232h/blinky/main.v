@@ -9,7 +9,7 @@ module main #(
     parameter integer N = 25
 ) (
     input  sys_clk,  // 25MHz clock
-    output led       // The blinking LED.
+    output led       // The blinking LED, active low.
 );
 
   // The blink counter. It starts at 0 when the FPGA is configured.

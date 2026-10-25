@@ -1,0 +1,9 @@
+// Constraint file of the blinky example for the Sipeed Tang Nano 4K board.
+// It assigns the design's signals to FPGA pins, and lists only
+// the pins that this example uses.
+
+// Clock (27MHz).
+IO_LOC  "sys_clk" 45;
+
+// LED, active low.
+IO_LOC  "led" 10;

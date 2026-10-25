@@ -1,0 +1,8 @@
+# Constraint file of the blinky example for the ECP5 Evaluation Board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses. The design uses the internal
+# oscillator, so there is no clock pin.
+
+# LED0, active low. Its bank runs at 2.5V.
+LOCATE COMP "led" SITE "A13";
+IOBUF  PORT "led" PULLMODE=NONE IO_TYPE=LVCMOS25 DRIVE=4;

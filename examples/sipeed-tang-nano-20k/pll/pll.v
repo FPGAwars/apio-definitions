@@ -16,6 +16,9 @@ module pll (
     output clock_out,
     output locked
 );
+`ifdef SYNTHESIS
+
+  // The real PLL.
 
   rPLL #(
       .FCLKIN("27.0"),
@@ -39,5 +42,13 @@ module pll (
       .CLKOUT(clock_out),  // 180.0 MHz
       .LOCK(locked)
   );
+
+`else
+
+  // Simulation model: pass the input clock through, and report locked.
+  assign clock_out = clock_in;
+  assign locked = 1'b1;
+
+`endif
 
 endmodule

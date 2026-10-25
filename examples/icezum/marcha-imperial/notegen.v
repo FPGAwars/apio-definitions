@@ -1,50 +1,50 @@
 //-----------------------------------------------------------------------------
-//-- Divisor de frecuencias para generacion de notas musicales
+//-- Frequency divider that generates musical notes.
 //-- (c) BQ. October 2015. written by Juan Gonzalez (obijuan)
 //-----------------------------------------------------------------------------
 //-- GPL license
 //-----------------------------------------------------------------------------
-//-- Esta formado por dos divisores en cadena. El primero genera un pulso
-//-- de anchura 1 ciclo de reloj, y frecuencia de la nota 2 * note
-//-- Esta señal se pasa por un divisor entre 2, para generar una señal con
-//-- ciclo de trabajo del 50% y frecuencia note
+//-- It's made of two dividers in a chain. The first one makes a pulse
+//-- 1 clock cycle wide, at twice the note's frequency.
+//-- That signal goes through a divide-by-2, which makes a signal with
+//-- a 50% duty cycle at the note's frequency.
 //-----------------------------------------------------------------------------
 
 module notegen (
-    input  wire        clk,     //-- Senal de reloj global
-    input  wire        rstn,    //-- Reset
-    input  wire [15:0] note,    //-- Divisor
+    input  wire        sys_clk,  //-- The global clock.
+    input  wire        rstn,     //-- Reset
+    input  wire [15:0] note,     //-- Divider.
     output reg         clk_out
-);  //-- Señal de salida
+);  //-- Output signal.
 
   wire clk_tmp;
 
-  //-- Registro para implementar el contador modulo note
+  //-- Register for the modulo note counter.
   reg [15:0] divcounter = 0;
 
-  //-- Contador módulo note
-  always @(posedge clk)
+  //-- Modulo note counter.
+  always @(posedge sys_clk)
 
     //-- Reset
     if (rstn == 0)
       divcounter <= 0;
 
-    //-- Si la nota es 0 no se incrementa contador
+    //-- If the note is 0, don't count.
     else if (note == 0) divcounter <= 0;
 
-    //-- Si se alcanza el tope, poner a 0
+    //-- On reaching the top, go back to 0.
     else if (divcounter == note - 1) divcounter <= 0;
 
-    //-- Incrementar contador
+    //-- Count up.
     else
       divcounter <= divcounter + 1;
 
-  //-- Sacar un pulso de anchura 1 ciclo de reloj si el generador
+  //-- Output a pulse 1 clock cycle wide when the counter
   assign clk_tmp = (divcounter == 0) ? 1 : 0;
 
-  //-- Divisor de frecuencia entre 2, para obtener como salida una señal
-  //-- con un ciclo de trabajo del 50%
-  always @(posedge clk)
+  //-- Divide the frequency by 2, to output a signal
+  //-- with a 50% duty cycle.
+  always @(posedge sys_clk)
     if (rstn == 0) clk_out <= 0;
 
     else if (note == 0) clk_out <= 0;

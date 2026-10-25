@@ -1,0 +1,33 @@
+[*]
+[*] GTKWave save file for main_tb.v, used by 'apio sim'.
+[*]
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-16.365579 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] main_tb.
+[treeopen] main_tb.dut.
+[sst_width] 253
+[signals_width] 160
+[sst_expanded] 1
+[sst_vpaned_height] 158
+@28
+[color] 1
+main_tb.assertion_err
+@420
+main_tb.clk_num
+@28
+main_tb.ext_clk
+main_tb.dut.sys_clk
+main_tb.dut.sys_rst
+@200
+-
+@24
+main_tb.dut.counter[31:0]
+@200
+-
+@29
+[color] 2
+main_tb.led_n
+[pattern_trace] 1
+[pattern_trace] 0

@@ -2,7 +2,7 @@
 # It assigns the design's signals to FPGA pins, and lists only
 # the pins that this example uses.
 
-# ------------ User Leds ------------------------------------------------------
+# ------------ User Leds (active high) ----------------------------------------
 set_io leds[0] 45  # output
 set_io leds[1] 44  # output
 set_io leds[2] 43  # output

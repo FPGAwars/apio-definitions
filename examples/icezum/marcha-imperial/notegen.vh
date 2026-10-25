@@ -1,13 +1,13 @@
-//-- Constantes para definir los valores del divisor segun la
-//-- frecuencia deseada
-//-- OJO! Estas constantes solo valen para ser reproducidas con el 
-//-- componente notegen.v
+//-- Constants with the divider values for the wanted
+//-- frequencies.
+//-- Note: these constants only work with the 
+//-- notegen.v module.
 
-//------- Frecuencias para notas musicales
+//------- Frequencies of musical notes
 
 // verilog_format: off
 
-//-- Octava: 0
+//-- Octave: 0
 `define DO_0    'h59959  //-- 16.352 Hz
 `define DOs_0   'h548E6  //-- 17.324 Hz
 `define RE_0    'h4FCF7  //-- 18.354 Hz
@@ -22,7 +22,7 @@
 `define SI_0    'h2F74A  //-- 30.868 Hz
 
 
-//-- Octava: 1
+//-- Octave: 1
 `define DO_1    'h2CCAC  //-- 32.703 Hz
 `define DOs_1   'h2A473  //-- 34.648 Hz
 `define RE_1    'h27E7C  //-- 36.708 Hz
@@ -37,7 +37,7 @@
 `define SI_1    'h17BA5  //-- 61.735 Hz
 
 
-//-- Octava: 2
+//-- Octave: 2
 `define DO_2    'h16656  //-- 65.406 Hz
 `define DOs_2   'h1523A  //-- 69.296 Hz
 `define RE_2    'h13F3E  //-- 73.416 Hz
@@ -52,7 +52,7 @@
 `define SI_2    'h0BDD2  //-- 123.471 Hz
 
 
-//-- Octava: 3
+//-- Octave: 3
 `define DO_3    'h0B32B  //-- 130.813 Hz
 `define DOs_3   'h0A91D  //-- 138.591 Hz
 `define RE_3    'h09F9F  //-- 146.832 Hz
@@ -67,7 +67,7 @@
 `define SI_3    'h05EE9  //-- 246.942 Hz
 
 
-//-- Octava: 4
+//-- Octave: 4
 `define DO_4    'h05996  //-- 261.626 Hz
 `define DOs_4   'h0548E  //-- 277.183 Hz
 `define RE_4    'h04FCF  //-- 293.665 Hz
@@ -82,7 +82,7 @@
 `define SI_4    'h02F75  //-- 493.883 Hz
 
 
-//-- Octava: 5
+//-- Octave: 5
 `define DO_5    'h02CCB  //-- 523.251 Hz
 `define DOs_5   'h02A47  //-- 554.365 Hz
 `define RE_5    'h027E8  //-- 587.330 Hz
@@ -97,7 +97,7 @@
 `define SI_5    'h017BA  //-- 987.767 Hz
 
 
-//-- Octava: 6
+//-- Octave: 6
 `define DO_6    'h01665  //-- 1046.502 Hz
 `define DOs_6   'h01524  //-- 1108.731 Hz
 `define RE_6    'h013F4  //-- 1174.659 Hz
@@ -112,7 +112,7 @@
 `define SI_6    'h00BDD  //-- 1975.533 Hz
 
 
-//-- Octava: 7
+//-- Octave: 7
 `define DO_7    'h00B33  //-- 2093.005 Hz
 `define DOs_7   'h00A92  //-- 2217.461 Hz
 `define RE_7    'h009FA  //-- 2349.318 Hz
@@ -127,7 +127,7 @@
 `define SI_7    'h005EF  //-- 3951.066 Hz
 
 
-//-- Octava: 8
+//-- Octave: 8
 `define DO_8    'h00599  //-- 4186.009 Hz
 `define DOs_8   'h00549  //-- 4434.922 Hz
 `define RE_8    'h004FD  //-- 4698.636 Hz
@@ -142,7 +142,7 @@
 `define SI_8    'h002F7  //-- 7902.133 Hz
 
 
-//-- Octava: 9
+//-- Octave: 9
 `define DO_9    'h002CD  //-- 8372.018 Hz
 `define DOs_9   'h002A4  //-- 8869.844 Hz
 `define RE_9    'h0027E  //-- 9397.273 Hz
@@ -157,7 +157,7 @@
 `define SI_9    'h0017C  //-- 15804.266 Hz
 
 
-//-- Octava: 10
+//-- Octave: 10
 `define DO_10   'h00166  //-- 16744.036 Hz
 `define DOs_10  'h00152  //-- 17739.688 Hz
 `define RE_10   'h0013F  //-- 18794.545 Hz

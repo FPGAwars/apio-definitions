@@ -1,0 +1,9 @@
+# Constraint file of the blinky example for the UPduino v3.0 board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses. The design uses the internal
+# oscillator, so there is no clock pin.
+
+# RGB LED, active low. These are the iCE40UP5K's dedicated RGB LED pins.
+set_io rgb_led[0] 41  # Red.
+set_io rgb_led[1] 39  # Green.
+set_io rgb_led[2] 40  # Blue.

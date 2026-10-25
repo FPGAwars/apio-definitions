@@ -1,31 +1,27 @@
+//------------------------------------------------------------------
+//-- Blinking LED
+//------------------------------------------------------------------
 
+// N is the counter width. leds_n[3] toggles every 2^(N-1) clocks.
+// With the default N = 26 and a 50MHz clock, it toggles about
+// every 0.7 seconds. The testbench uses a small N to run quickly.
 module main #(
-    // The macro N is defined in apio.ini
-    parameter integer N = `N
+    parameter integer N = 26
 ) (
-    input  CLK,     // 50MHz clock
-    output [3:0] LEDS // Active low
+    input        sys_clk,  // 50MHz clock
+    output [3:0] leds_n    // leds_n[3] blinks, the rest are off. Active low.
 );
 
-  reg [31:0] counter = 0;
+  // The blink counter. It starts at 0 when the FPGA is configured.
+  reg [N-1:0] counter = 0;
 
-  reg led = 0;
+  // Count up on every clock.
+  always @(posedge sys_clk) counter <= counter + 1;
 
-  // Leds are active low.
-  assign LEDS[3] = led;
-  assign LEDS[2] = !led;
-  assign LEDS[1] = 1'b1;
-  assign LEDS[0] = 1'b1;
+  // leds[3] follows the counter's top bit. The other LEDs are off.
+  wire [3:0] leds = {counter[N-1], 3'b0};
 
-  always @(posedge CLK) begin
-    if (counter >= N - 1) begin
-      counter <= 0;
-      led <= !led;
-    end else begin
-      counter <= counter + 1;
-    end
-  end
+  // The LEDs are active low, so invert them.
+  assign leds_n = ~leds;
 
 endmodule
-
-

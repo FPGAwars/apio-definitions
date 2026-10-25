@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
-//-- Divisor de reloj
-//-- Señal de periodo igual al indicado
-//-- El ancho del pulso positivo es de 1 ciclo de reloj
+//-- Clock divider.
+//-- A signal with the given period.
+//-- The high pulse is 1 clock cycle wide.
 //--
 //-- (c) BQ. September 2015. written by Juan Gonzalez (obijuan)
 //-----------------------------------------------------------------------------
@@ -10,29 +10,29 @@
 `include "divider.vh"
 
 //-- ENTRADAS:
-//--     -clk: Senal de reloj del sistema (12 MHZ en la iceStick)
+//--     -sys_clk: The system clock (12MHz on the iCEstick).
 //
 //-- SALIDAS:
-//--     - clk_out. Señal de salida para lograr la velocidad en baudios indicada
-//--                Anchura de 1 periodo de clk. SALIDA NO REGISTRADA
+//--     - clk_out: The output pulses, one every M clocks.
+//--                Each is 1 sys_clk period wide. NOT A REGISTERED OUTPUT.
 module dividerp1 (
-    input  wire clk,
+    input  wire sys_clk,
     output wire clk_out
 );
 
-  //-- Valor por defecto de la velocidad en baudios
+  //-- Default period, in clocks.
   parameter  M = `T_100ms;
 
-  //-- Numero de bits para almacenar el divisor de baudios
+  //-- Number of bits to hold the divider.
   localparam N = $clog2(M);
 
-  //-- Registro para implementar el contador modulo M
+  //-- Register for the modulo M counter.
   reg [N-1:0] divcounter = 0;
 
-  //-- Contador módulo M
-  always @(posedge clk) divcounter <= (divcounter == M - 1) ? 0 : divcounter + 1;
+  //-- Modulo M counter.
+  always @(posedge sys_clk) divcounter <= (divcounter == M - 1) ? 0 : divcounter + 1;
 
-  //-- Sacar un pulso de anchura 1 ciclo de reloj si el generador
+  //-- Output a pulse 1 clock cycle wide when the counter
   assign clk_out = (divcounter == 0) ? 1 : 0;
 
 

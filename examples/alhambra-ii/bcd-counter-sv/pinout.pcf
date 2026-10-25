@@ -5,7 +5,7 @@
 # -------------------------- System clock (12MHz) -----------------------------
 set_io sys_clk 49  # input
 
-# ------------ User Leds ------------------------------------------------------
+# ------------ User Leds (active high) ----------------------------------------
 set_io leds[0] 45  # output
 set_io leds[1] 44  # output
 set_io leds[2] 43  # output

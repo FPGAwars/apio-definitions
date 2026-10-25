@@ -1,27 +1,27 @@
-// Tests the speed of N bits adder.
+// Tests the speed of a WIDTH bit adder: a counter that adds 7 on every
+// clock. 'apio report' shows the highest clock frequency it can run at.
 // To run:
 //   apio report -e width-256
 //   apio report -e width-128
+//   apio report -e width-64
 //   apio report -e width-32
 //   apio report -e width-16
 //   apio report -e width-8
 
 module main #(
-    parameter WIDTH = `WIDTH
+    parameter integer WIDTH = `WIDTH
 ) (
-    input  CLK,  // System clock
-    output LED   // Output
+    input  sys_clk,  // 25MHz clock
+    output led_n     // The counter's top bit, on an LED, active low.
 );
 
+  // The counter. It starts at 0 when the FPGA is configured.
   reg [WIDTH-1:0] counter = 0;
 
-  assign LED = counter[WIDTH-1];
+  // Add 7 on every clock.
+  always @(posedge sys_clk) counter <= counter + 7;
 
-  always @(posedge CLK) begin
-    counter <= counter + 7;
-  end
-
+  // Show the counter's top bit, so the design keeps the whole adder.
+  assign led_n = ~counter[WIDTH-1];
 
 endmodule
-
-

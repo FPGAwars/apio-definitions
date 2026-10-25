@@ -1,0 +1,19 @@
+# Constraint file of the blinky example for the Icepi Zero board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Clock (50MHz).
+LOCATE COMP "sys_clk" SITE "M1";
+IOBUF  PORT "sys_clk" IO_TYPE=LVCMOS33 PULLMODE=NONE;
+
+# LEDs, active high.
+LOCATE COMP "leds[0]" SITE "E13";
+LOCATE COMP "leds[1]" SITE "D14";
+LOCATE COMP "leds[2]" SITE "E12";
+LOCATE COMP "leds[3]" SITE "C13";
+LOCATE COMP "leds[4]" SITE "D13";
+IOBUF  PORT "leds[0]" IO_TYPE=LVCMOS33 PULLMODE=DOWN DRIVE=4;
+IOBUF  PORT "leds[1]" IO_TYPE=LVCMOS33 PULLMODE=DOWN DRIVE=4;
+IOBUF  PORT "leds[2]" IO_TYPE=LVCMOS33 PULLMODE=DOWN DRIVE=4;
+IOBUF  PORT "leds[3]" IO_TYPE=LVCMOS33 PULLMODE=DOWN DRIVE=4;
+IOBUF  PORT "leds[4]" IO_TYPE=LVCMOS33 PULLMODE=DOWN DRIVE=4;

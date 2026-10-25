@@ -1,0 +1,19 @@
+# Constraint file of the blinky example for the ButterStick r1.0 board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Clock (30MHz).
+LOCATE COMP "sys_clk" SITE "B12";
+IOBUF  PORT "sys_clk" PULLMODE=NONE IO_TYPE=LVCMOS33;
+
+# LED, active high. This is the anode of the first of the 7 RGB LEDs.
+LOCATE COMP "led" SITE "C13";
+IOBUF  PORT "led" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;
+
+# LED color select, active high. 3'b010 selects blue.
+LOCATE COMP "led_color[0]" SITE "T1";
+LOCATE COMP "led_color[1]" SITE "R1";
+LOCATE COMP "led_color[2]" SITE "U1";
+IOBUF  PORT "led_color[0]" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;
+IOBUF  PORT "led_color[1]" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;
+IOBUF  PORT "led_color[2]" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;

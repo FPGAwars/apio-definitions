@@ -24,7 +24,7 @@ FPGA_TYPE: lp
 FPGA_PACK: cm81
 PROG: tinyfpgab -c /dev/ttyACM0 --program
 yosys -p "synth_ice40 -blif hardware.blif" -q Blink13.v
-arachne-pnr -d 8k -P cm81 -p TinyFPGA-B2-pins.pcf -o hardware.asc hardware.blif
+arachne-pnr -d 8k -P cm81 -p pinout.pcf -o hardware.asc hardware.blif
 [...]
 icepack hardware.asc hardware.bin
 tinyfpgab -c /dev/ttyACM0 --program hardware.bin

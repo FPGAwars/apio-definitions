@@ -44,7 +44,12 @@ The fields:
 | `usb.product-regex` | no | A Python regex matched against the USB product string, as shown by `apio devices usb`. Use it to tell apart boards that share a VID and PID. Start it with `^` to match from the beginning of the string. |
 | `tinyprog.name-regex` | no | For boards programmed with `tinyprog`: a regex matched against the name the board reports. |
 
-Put a comment with the board's web page above each entry (`// https://...`), as the other entries do.
+**Board link:** put a comment with a link to the board above each entry, on the line right before the board ID (`// https://...`).
+
+- **Which page:** the one with the most technical information: the maker's hardware repo, wiki or documentation page with the schematic, pinout and constraint files. Use a store or product page only when nothing more technical exists.
+- **One page per board:** boards that are the same hardware with a different programmer or FPGA size (e.g. the `-ft232h` and `-usb-blaster` variants) share the same link. When a page covers several boards, link to the part for this board if there is one (e.g. a folder or page for that version).
+- **Check it:** open the link and make sure it loads and is about this board.
+- **No page found:** write `// TODO: Add a link to the board's home page.` instead. Replace it when a page turns up.
 
 ## Programmers (`programmers.jsonc`)
 

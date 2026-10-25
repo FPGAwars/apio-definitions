@@ -9,7 +9,7 @@ module main #(
     parameter integer N = 25
 ) (
     input        sys_clk,    // 25MHz clock
-    output [7:0] leds,       // leds[7] blinks, the rest are off.
+    output [7:0] leds,       // Active high. leds[7] blinks, the rest are off.
     output       wifi_gpio0  // Held high, see below.
 );
 

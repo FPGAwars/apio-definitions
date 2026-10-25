@@ -1,0 +1,10 @@
+# Constraint file of the blinky example for the Olimex iCE40HX8K-EVB board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# ------------ System clock (100MHz) ------------------------------------------
+set_io sys_clk J3  # input
+
+# ------------ User Leds (active high) ----------------------------------------
+set_io leds[0] M12  # output
+set_io leds[1] R16  # output

@@ -1,0 +1,6 @@
+# Constraint file of the led-green example for the EDU-CIAA-FPGA board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Green LED, active high.
+set_io led 4  # output

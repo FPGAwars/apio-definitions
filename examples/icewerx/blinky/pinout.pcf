@@ -1,17 +1,9 @@
-# -----------------------------------------------------------------------------
-#- iceWerx constraint file (.pcf)
-#- By Juan Gonzalez (Obijuan) 
-#- April - 2022
-#- GPL license
-# -----------------------------------------------------------------------------
+# Constraint file of the blinky example for the iCEWerx board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
 
+# Clock (12MHz).
+set_io sys_clk P7  # input
 
-# ------------ User Leds ------------------------------------------------------
-#-- Red LED
-set_io -nowarn LEDR A5  # output
-
-#-- Green LED
-set_io -nowarn LEDG M4  # output
-
-#-- 12 Mhz clock 
-set_io -nowarn CLK	P7 # input
+# Green LED, active low.
+set_io led M4  # output

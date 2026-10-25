@@ -1,19 +1,11 @@
+// Constraint file of the blinky example for the BRS-100-GW1NR9 board.
+// It assigns the design's signals to FPGA pins, and lists only
+// the pins that this example uses.
 
-// On board 27Mhz oscilator.
-IO_LOC "sys_clk"   52;
+// Clock (27MHz).
+IO_LOC  "sys_clk" 52;
 IO_PORT "sys_clk" IO_TYPE=LVCMOS33 PULL_MODE=NONE;
 
-// LEDs
-IO_LOC  "leds[0]"  16;
-IO_LOC  "leds[1]"  15;
-IO_LOC  "leds[2]"  14;
-IO_LOC  "leds[3]"  13;
-IO_LOC  "leds[4]"  11;
-IO_LOC  "leds[5]"  10;
-
-IO_PORT "leds[0]"  IO_TYPE=LVCMOS33  PULL_MODE=UP  DRIVE=8;
-IO_PORT "leds[1]"  IO_TYPE=LVCMOS33  PULL_MODE=UP  DRIVE=8;
-IO_PORT "leds[2]"  IO_TYPE=LVCMOS33  PULL_MODE=UP  DRIVE=8;
-IO_PORT "leds[3]"  IO_TYPE=LVCMOS33  PULL_MODE=UP  DRIVE=8;
-IO_PORT "leds[4]"  IO_TYPE=LVCMOS33  PULL_MODE=UP  DRIVE=8;
-IO_PORT "leds[5]"  IO_TYPE=LVCMOS33  PULL_MODE=UP  DRIVE=8;
+// LED (the first of the 6 user LEDs), active low.
+IO_LOC  "led" 16;
+IO_PORT "led" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8;

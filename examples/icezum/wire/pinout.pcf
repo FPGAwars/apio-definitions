@@ -1,0 +1,9 @@
+# Constraint file of the wire example for the IceZUM Alhambra board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Header pin D13.
+set_io gpio 144  # input
+
+# LED0, active high.
+set_io led 95  # output

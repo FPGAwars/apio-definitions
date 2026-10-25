@@ -1,14 +1,14 @@
-// Board details at
-// https://wiki.sipeed.com/hardware/en/tang/tang-nano-20k/nano-20k.html
+// Constraint file of the speed-test example for the Sipeed Tang Nano 20K board.
+// It assigns the design's signals to FPGA pins, and lists only
+// the pins that this example uses.
 
-// See examples here https://github.com/sipeed/TangNano-20K-example
-
-IO_LOC "CLK"  4;
-IO_PORT "clk" PULL_MODE=UP IO_TYPE=LVCMOS33;
-
-IO_LOC "LED"  15; // Active low
-IO_PORT "led" PULL_MODE=UP DRIVE=8 IO_TYPE=LVCMOS33;
+// Clock (27MHz).
+IO_LOC  "sys_clk" 4;
+IO_PORT "sys_clk" PULL_MODE=UP IO_TYPE=LVCMOS33;
 
 // Per https://github.com/YosysHQ/nextpnr/issues/1515
-CLOCK_LOC "CLK" BUFG;
+CLOCK_LOC "sys_clk" BUFG;
 
+// LED, active low.
+IO_LOC  "led_n" 15;
+IO_PORT "led_n" PULL_MODE=UP DRIVE=8 IO_TYPE=LVCMOS33;

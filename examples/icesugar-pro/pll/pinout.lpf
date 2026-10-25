@@ -1,12 +1,11 @@
-# -- Board: IceSugar Pro (On board USB programmer)
+# Constraint file of the pll example for the iCESugar-Pro board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
 
-# -- CLK
+# Clock (25MHz).
 LOCATE COMP "ext_clk" SITE "P6";
 IOBUF  PORT "ext_clk" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;
 
-# -- LED
-LOCATE COMP "led" SITE "A11";
-IOBUF PORT "led" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4; 
-
-
-
+# LED (the green part of the RGB LED), active low.
+LOCATE COMP "led_n" SITE "A11";
+IOBUF  PORT "led_n" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;

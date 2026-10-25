@@ -1,17 +1,17 @@
 #------------------------------------------------------------------------------
-#-- Generacion automatica de las tablas con las frecuencias y valores
-#-- de los divisores para tocas todas las notas musicales en la iCEstick
+#-- Generates the tables with the frequencies and the divider
+#-- values for playing all the musical notes on the iCEstick.
 #--
-#-- Genera todas las constantes en formato Verilog, para poder incluir
-#-- la tabla directametne en nuestros programas
+#-- It prints all the constants in Verilog, so the table can be
+#-- included directly in our designs.
 #------------------------------------------------------------------------------
 #-- (C) BQ. September-2015. Written by Juan Gonzalez (Obijuan)
 #------------------------------------------------------------------------------
 import math as m
 
 #---------------------------------------------
-#-- octavas: 0 - 10
-#-- Notas: 1 - 12
+#-- Octaves: 0 - 10
+#-- Notes: 1 - 12, in solfege (DO is C, RE is D, and so on)
 #--    1 - DO
 #--    2 - DO#
 #--    3 - RE
@@ -25,23 +25,23 @@ import math as m
 #--    11 - LA#
 #--    12 - SI
 
-##-- Diccionario con los nombres de las notas
+##-- Dictionary with the note names.
 nname = {1: 'DO',   2: 'DOs', 3: 'RE',   4 : 'REs',
          5: 'MI',   6: 'FA',  7: 'FAs',  8: 'SOL',
          9: 'SOLs', 10: 'LA', 11: 'LAs', 12: 'SI'};
 
-#-- Calcular la frecuencia de una nota de una octava
+#-- Compute the frequency of a note in an octave.
 def freq(note, octave = 4):
 	return 440.0 * m.exp(((octave-4)+(note-10)/12.0) * m.log(2))
 	
-#-- Calcular el valor del divisor para tocar la nota en la FPGA
-#-- de la placa iCEstick
+#-- Compute the divider value for playing the note on the FPGA
+#-- of the iCEstick board.
 def divisor(note, octave = 4):
 	return int(round(12000000 / (2*freq(note, octave))))
 
-#-- Imprimir la table, con salida verilog
+#-- Print the table, as Verilog.
 def print_table(octave = 4):
-	print("//-- Octava: {}".format(octave))
+	print("//-- Octave: {}".format(octave))
 	for note in range(12):
 		#-- Print table in verilog sintax
 		print("`define {:7} 'h{:05X}  //-- {:.3f} Hz".format(
@@ -51,7 +51,7 @@ def print_table(octave = 4):
 	print("\n")
 
 #-- Programa principal
-#-- Sacar la tabla por la pantalla
+#-- Print the table on the screen.
 for oct in range(11):
 	print_table(oct)
 

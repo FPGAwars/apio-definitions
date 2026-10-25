@@ -1,15 +1,25 @@
+// PLL 25MHz -> 120MHz. EHXPLLL can't be simulated, so simulations use a
+// simple model instead.
+//
 // diamond 3.7 accepts this PLL
 // diamond 3.8-3.9 is untested
 // diamond 3.10 or higher is likely to abort with error about unable to use feedback signal
 // cause of this could be from wrong CPHASE/FPHASE parameters
 module pll (
-    input  clkin,    // 25 MHz, 0 deg
-    output clkout0,  // 120 MHz, 0 deg
+    input  clock_in,   // 25 MHz, 0 deg
+    output clock_out,  // 120 MHz, 0 deg
     output locked
 );
+
+`ifdef SYNTHESIS
+
+  // The real PLL.
   (* FREQUENCY_PIN_CLKI="25" *)
-(* FREQUENCY_PIN_CLKOP="120" *)
-(* ICP_CURRENT="12" *) (* LPF_RESISTOR="8" *) (* MFG_ENABLE_FILTEROPAMP="1" *) (* MFG_GMCREF_SEL="2" *)
+  (* FREQUENCY_PIN_CLKOP="120" *)
+  (* ICP_CURRENT="12" *)
+  (* LPF_RESISTOR="8" *)
+  (* MFG_ENABLE_FILTEROPAMP="1" *)
+  (* MFG_GMCREF_SEL="2" *)
   EHXPLLL #(
       .PLLRST_ENA("DISABLED"),
       .INTFB_WAKE("DISABLED"),
@@ -29,9 +39,9 @@ module pll (
   ) pll_i (
       .RST(1'b0),
       .STDBY(1'b0),
-      .CLKI(clkin),
-      .CLKOP(clkout0),
-      .CLKFB(clkout0),
+      .CLKI(clock_in),
+      .CLKOP(clock_out),
+      .CLKFB(clock_out),
       .CLKINTFB(),
       .PHASESEL0(1'b0),
       .PHASESEL1(1'b0),
@@ -52,4 +62,12 @@ module pll (
       .INTLOCK(),
       .REFCLK()
   );
+
+`else
+
+  // Simulation model: pass the input clock through, and report locked.
+  assign clock_out = clock_in;
+  assign locked = 1'b1;
+
+`endif
 endmodule

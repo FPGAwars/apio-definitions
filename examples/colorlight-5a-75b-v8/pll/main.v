@@ -1,30 +1,55 @@
-//------------------------------------------------------------------
-//-- Blinking LED using a custom PLL clock.
-//------------------------------------------------------------------
+// Blinks an LED using a 120MHz clock that the PLL generates from
+// the board's 25MHz clock.
 
-module main (
+module main #(
+    // Clocks between LED toggles. 20_000_000 toggles the LED 6 times
+    // per second with the 120MHz clock. The testbench uses a small
+    // value to run quickly.
+    parameter integer DIV = 20_000_000
+) (
     input  ext_clk,  // 25MHz clock
-    output led       // LED to blink
+    output led_n     // The blinking LED, active low.
 );
 
+  // The 120MHz main clock, and a flag that is high once the PLL
+  // output is stable.
   wire sys_clk;
+  wire pll_locked;
 
-  // PLL. Generated with;
-  //   apio raw -- ecppll -i 25 -o 120 -f pll.v
-  //   apio format pll.v
-  //
-  // Also, added manually the unused signals to make 'apio lint' happy.
-  //
+  // PLL 25MHz -> 120MHz, in pll.v.
   pll pll (
-      .clkin  (ext_clk),  // 25 MHz, 0 deg
-      .clkout0(sys_clk),  // 120 MHz, 0 deg
-      .locked ()
+      .clock_in(ext_clk),
+      .clock_out(sys_clk),
+      .locked(pll_locked)
   );
 
-  reg [23:0] counter = 0;
+  // Power-on reset: sys_rst is high until the PLL is locked and
+  // for 3 more clocks.
+  reg [1:0] rst_cnt = 0;
+  wire sys_rst = ~&rst_cnt;
+  always @(posedge sys_clk)
+    if (!pll_locked) rst_cnt <= 2'd0;
+    else if (sys_rst) rst_cnt <= rst_cnt + 1;
 
-  always @(posedge sys_clk) counter <= counter + 1;
+  // The LED, before inverting it for the active-low pin.
+  reg led;
 
-  assign led = counter[23];
+  // Counts clocks from 0 to DIV-1.
+  reg [31:0] counter;
+
+  // Toggle the LED every DIV clocks. The LED is on after reset.
+  always @(posedge sys_clk)
+    if (sys_rst) begin
+      counter <= 32'd0;
+      led <= 1'b1;
+    end else if (counter == DIV - 1) begin
+      counter <= 32'd0;
+      led <= ~led;
+    end else begin
+      counter <= counter + 1;
+    end
+
+  // The LED is active low, so invert it.
+  assign led_n = ~led;
 
 endmodule

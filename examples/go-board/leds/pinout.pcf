@@ -1,0 +1,9 @@
+# Constraint file of the leds example for the Go Board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# ------------ User Leds (active high) ----------------------------------------
+set_io leds[0] 56  # output
+set_io leds[1] 57  # output
+set_io leds[2] 59  # output
+set_io leds[3] 60  # output

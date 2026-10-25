@@ -1,0 +1,11 @@
+# Constraint file of the blinky example for the OrangeCrab r0.2 board.
+# It assigns the design's signals to FPGA pins, and lists only
+# the pins that this example uses.
+
+# Clock (48MHz).
+LOCATE COMP "sys_clk" SITE "A9";
+IOBUF  PORT "sys_clk" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;
+
+# LED (the red part of the RGB LED), active low.
+LOCATE COMP "led" SITE "K4";
+IOBUF  PORT "led" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;

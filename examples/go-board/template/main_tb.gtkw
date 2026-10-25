@@ -1,23 +1,26 @@
 [*]
-[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Wed Dec 18 19:00:23 2024
+[*] GTKWave save file for main_tb.v, used by 'apio sim'.
 [*]
-[dumpfile] "/Volumes/projects/apio-examples/repo/examples/go-board/template/_build/main_tb.vcd"
-[dumpfile_mtime] "Wed Dec 18 19:00:11 2024"
-[dumpfile_size] 596
-[savefile] "/Volumes/projects/apio-examples/repo/examples/go-board/template/main_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-18.251245 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-15.068 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] main_tb.
 [sst_width] 253
-[signals_width] 78
+[signals_width] 160
 [sst_expanded] 1
 [sst_vpaned_height] 158
 @28
-main_tb.clk
-@29
-main_tb.l1
+[color] 1
+main_tb.assertion_err
+@420
+main_tb.clk_num
+@28
+main_tb.sys_clk
+@200
+-
+-LED
+@28
+main_tb.led
 [pattern_trace] 1
 [pattern_trace] 0
