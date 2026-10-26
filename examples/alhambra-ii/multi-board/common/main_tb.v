@@ -51,17 +51,16 @@ module main_tb;
   initial begin
     $dumpvars(0, main_tb);
 
-    // Before the first clock, the counter is 0 and the LED is off.
+    // Before the first clock, the LED is off.
     #1;
-    `EXPECT_EQ(dut.counter, 32'd0)
     `EXPECT_EQ(led, 1'b0)
 
-    // After i clocks the counter is i mod HALF_CYCLE, and the LED
-    // toggled every HALF_CYCLE clocks.
+    // After i clocks the LED has toggled every HALF_CYCLE clocks. The
+    // checks use only the design's ports, so that the testbench can also
+    // be linted by itself ('apio lint common/main_tb.v'), without main.v.
     for (i = 1; i <= 24; i = i + 1) begin
       @(posedge sys_clk);
       #1;
-      `EXPECT_EQ(dut.counter, i % HALF_CYCLE)
       `EXPECT_EQ(led, (i/HALF_CYCLE) % 2 == 1)
     end
 

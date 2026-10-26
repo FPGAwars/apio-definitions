@@ -53,8 +53,8 @@ module clock_divider_tb;
       if (i > 0) @(posedge sys_clk);
       #1;
       `EXPECT_EQ(dut.clock_div2, i[0])
-      `EXPECT_EQ(clock_div4_0, ((i + 1) / 2) % 2)
-      `EXPECT_EQ(clock_div4_90, (i/ 2) % 2)
+      `EXPECT_EQ(clock_div4_0, ((i + 1) / 2) % 2 == 1)
+      `EXPECT_EQ(clock_div4_90, (i/ 2) % 2 == 1)
     end
 
     $display("End of simulation");

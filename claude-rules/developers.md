@@ -34,7 +34,7 @@ So after editing `common-examples-files/`, run `invoke copy-common` from the rep
 - `--example <board>` tests one board's examples, and `--example <board>/<example>` tests one example.
 - `--examples-root <dir>` tests the examples in another dir.
 
-For each env of each example, it runs `apio build`, `lint`, `lint --nosynth`, `graph`, `report`, `test`, `sim --no-gtkwave`, `format`, and `apio api` commands. It stops at the first failure.
+For each env of each example, it runs `apio build`, `lint`, `lint --nosynth`, `lint <testbench>` for each testbench (a plain `apio lint` uses `main` as the top module, so it doesn't check the testbenches), `graph`, `report`, `test`, `sim --no-gtkwave`, `format`, and `apio api` commands. It stops at the first failure.
 
 To check one example by hand, `cd examples/<board>/<example>` and run the same `apio` commands, e.g. `apio build -e <env>`, `apio test`, `apio format`.
 

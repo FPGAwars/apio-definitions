@@ -56,7 +56,7 @@ module main_tb;
       if (i > 0) @(posedge sys_clk);
       #1;
       `EXPECT_EQ(cols_n, 4'b1110)
-      `EXPECT_EQ(rows_n, (i/N) % 2 ? 8'b1111_1110 : 8'b1111_1101)
+      `EXPECT_EQ(rows_n, ((i/N) % 2 == 1) ? 8'b1111_1110 : 8'b1111_1101)
     end
 
     $display("End of simulation");

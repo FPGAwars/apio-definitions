@@ -207,7 +207,7 @@ Use the FPGA's internal oscillator (e.g. `SB_HFOSC`) only when the board has no 
 
 ## Lint and formatting
 
-- **Lint:** `apio lint` must report no warnings. It exits with an error on any Verilator warning, so `test_examples.py` already fails on them. Width-explicit constants (`4'd0` rather than `0` where widths differ) avoid most width warnings.
+- **Lint:** `apio lint`, and `apio lint <testbench>` for each testbench, must report no warnings. They exit with an error on any Verilator warning, so `test_examples.py` fails on them. See testbench rules 15 to 17. Width-explicit constants (`4'd0` rather than `0` where widths differ) avoid most width warnings.
 - **Formatting:** all examples must be formatted with `apio format`, so that running it again changes no file. Run `apio format` in each example you add or edit, or `invoke format` from the repo root for all. `test_examples.py` runs `apio format` but doesn't check for a diff, so check with `git diff` afterwards. As of 2026-10-22, every example passes this check.
 - **`NO_FORMAT_EXAMPLES`** in `test_examples.py` lists examples the test skips formatting for. It's empty, since all the examples format cleanly.
 
@@ -247,6 +247,19 @@ Write new testbenches, and testbenches you rewrite, to these rules.
 12. Call `$dumpvars(0, <testbench_module_name>);`.
 13. Never call `$dumpfile()`. Apio sets the VCD file itself, and `test_examples.py` fails on it.
 14. Print `End of simulation` at the end of the testbench.
+
+**Lint**
+
+15. Each testbench must lint cleanly by itself (`apio lint <testbench>`), which `test_examples.py` checks. A plain `apio lint` uses `main` as the top module, so it doesn't check the testbenches.
+16. Make an expected value match the width of the signal it's checked against. Verilator warns when a 4-bit signal is compared with a 32-bit `integer` expression such as `i % 10`, or when such an expression is assigned to a narrower `reg`. Compute the value into an `integer` (`int` in SystemVerilog), then compare through a slice of the signal's width:
+
+    ```verilog
+    expected = i % 10;
+    `EXPECT_EQ(count, expected[3:0])
+    ```
+
+    Unsized literals (`0`, `'h31`) and 1-bit results (`i % 2 == 1`) don't need this.
+17. When the design's files are in a subdir (e.g. `common/main.v`), check only the design's ports, not internal signals like `dut.counter`. Linted by itself, the testbench can't find the module in a subdir, and a reference to an internal signal then fails. `alhambra-ii/multi-board` does this.
 
 ### Testbench skeleton
 

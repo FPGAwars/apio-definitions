@@ -28,6 +28,10 @@ module bcd_digit_tb;
   int clk_num = 0;
   always @(posedge sys_clk) clk_num <= clk_num + 1;
 
+  // The expected count. Compared through [3:0], to match the width of
+  // count.
+  int expected;
+
   // Inputs, driven by the test sequence.
   logic sys_rst = 1;
   logic tick_in = 0;
@@ -68,13 +72,15 @@ module bcd_digit_tb;
       #1;
       tick_in = 0;
       #1;
-      `EXPECT_EQ(count, i % 10)
+      expected = i % 10;
+      `EXPECT_EQ(count, expected[3:0])
       `EXPECT_EQ(tick_out, 1'b0)
 
       // Without a tick, the digit holds its value.
       @(posedge sys_clk);
       #1;
-      `EXPECT_EQ(count, i % 10)
+      expected = i % 10;
+      `EXPECT_EQ(count, expected[3:0])
     end
 
     $display("End of simulation");

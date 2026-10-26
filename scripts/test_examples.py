@@ -155,7 +155,10 @@ def test_example_env(
     run_cmd(["apio", "build", "-e", env_name])
     run_cmd(["apio", "lint", "-e", env_name])
     run_cmd(["apio", "lint", "--nosynth", "-e", env_name])
-    # run_cmd(["apio", "lint", source_files[0], "-e", env_name])
+    # -- Lint each testbench by itself. The plain 'apio lint' above uses
+    # -- 'main' as the top module, so it doesn't check the testbenches.
+    for testbench in testbenches:
+        run_cmd(["apio", "lint", testbench, "-e", env_name])
     run_cmd(["apio", "graph", "-n", "-e", env_name])
     run_cmd(["apio", "report", "-e", env_name])
 

@@ -61,9 +61,11 @@ module main_tb;
 
   // The count as two BCD digits.
   function [7:0] bcd(input integer n);
+    integer tens, ones;
     begin
-      bcd[7:4] = n / 10;
-      bcd[3:0] = n % 10;
+      tens = n / 10;
+      ones = n % 10;
+      bcd  = {tens[3:0], ones[3:0]};
     end
   endfunction
 

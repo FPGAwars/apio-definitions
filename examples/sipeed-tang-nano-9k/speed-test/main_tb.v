@@ -42,6 +42,10 @@ module main_tb;
   // Loop index for the checks.
   integer i;
 
+  // The expected count. Compared through [7:0], to match the
+  // signal's width.
+  integer expected;
+
   // The test sequence.
   initial begin
     $dumpvars(0, main_tb);
@@ -50,7 +54,8 @@ module main_tb;
     for (i = 0; i <= 80; i = i + 1) begin
       if (i > 0) @(posedge sys_clk);
       #1;
-      `EXPECT_EQ(dut.counter, (7 * i) % 256)
+      expected = (7 * i) % 256;
+      `EXPECT_EQ(dut.counter, expected[7:0])
       `EXPECT_EQ(led_n, ~dut.counter[7])
     end
 

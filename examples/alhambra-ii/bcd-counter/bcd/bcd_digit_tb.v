@@ -48,6 +48,10 @@ module bcd_digit_tb;
   // Loop index, the number of ticks so far.
   integer i;
 
+  // The expected count. Compared through [3:0], to match the width of
+  // count.
+  integer expected;
+
   // The test sequence.
   initial begin
     $dumpvars(0, bcd_digit_tb);
@@ -70,13 +74,15 @@ module bcd_digit_tb;
       #1;
       tick_in = 0;
       #1;
-      `EXPECT_EQ(count, i % 10)
+      expected = i % 10;
+      `EXPECT_EQ(count, expected[3:0])
       `EXPECT_EQ(tick_out, 1'b0)
 
       // Without a tick, the digit holds its value.
       @(posedge sys_clk);
       #1;
-      `EXPECT_EQ(count, i % 10)
+      expected = i % 10;
+      `EXPECT_EQ(count, expected[3:0])
     end
 
     $display("End of simulation");

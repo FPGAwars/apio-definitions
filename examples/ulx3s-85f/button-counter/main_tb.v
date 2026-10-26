@@ -48,6 +48,10 @@ module main_tb;
   // Loop index for the checks.
   integer i;
 
+  // The expected counter bits on leds[5:0]. Compared through [5:0], to match the
+  // signal's width.
+  integer expected;
+
   // The test sequence.
   initial begin
     $dumpvars(0, main_tb);
@@ -58,7 +62,8 @@ module main_tb;
     for (i = 0; i <= 270; i = i + 1) begin
       if (i > 0) @(posedge sys_clk);
       #1;
-      `EXPECT_EQ(leds[5:0], (i % 256) >> 2)
+      expected = (i % 256) >> 2;
+      `EXPECT_EQ(leds[5:0], expected[5:0])
       `EXPECT_EQ(leds[6], (i >= 52) && (i < 102))
       `EXPECT_EQ(leds[7], 1'b1)
       `EXPECT_EQ(wifi_gpio0, 1'b1)

@@ -43,7 +43,7 @@ module main_tb;
   integer i;
 
   // The expected counter value.
-  reg [7:0] expected_count;
+  integer expected_count;
 
   // The test sequence.
   initial begin
@@ -60,7 +60,7 @@ module main_tb;
       @(posedge sys_clk);
       #1;
       expected_count = 7 * i;
-      `EXPECT_EQ(dut.counter, expected_count)
+      `EXPECT_EQ(dut.counter, expected_count[7:0])
       `EXPECT_EQ(led, expected_count[7])
     end
 

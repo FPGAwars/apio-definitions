@@ -46,6 +46,10 @@ module main_tb;
   // Loop index for the checks.
   integer i;
 
+  // The expected note index. Compared through [5:0], to match the
+  // signal's width.
+  integer expected;
+
   // The test sequence.
   initial begin
     $dumpvars(0, main_tb);
@@ -56,7 +60,8 @@ module main_tb;
     for (i = 0; i <= 40; i = i + 1) begin
       if (i > 0) @(posedge sys_clk);
       #1;
-      `EXPECT_EQ(dut.sel, ((i + 1) / 4) % 64)
+      expected = ((i + 1) / 4) % 64;
+      `EXPECT_EQ(dut.sel, expected[5:0])
       // The output logic first runs at the first clock, so skip clock 0.
       if (i > 0)
         case (dut.sel)

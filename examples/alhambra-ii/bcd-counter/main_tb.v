@@ -42,6 +42,11 @@ module main_tb;
   // The expected count, 0-99.
   integer count;
 
+  // The expected tens and ones digits. Compared through [3:0], to match
+  // the width of the LED nibbles.
+  integer tens;
+  integer ones;
+
   // The test sequence.
   initial begin
     $dumpvars(0, main_tb);
@@ -54,8 +59,10 @@ module main_tb;
       @(posedge sys_clk);
       #1;
       count = (clk_num < 7) ? 0 : ((clk_num - 4) / 3) % 100;
-      `EXPECT_EQ(leds[7:4], count/ 10)
-      `EXPECT_EQ(leds[3:0], count % 10)
+      tens  = count / 10;
+      ones  = count % 10;
+      `EXPECT_EQ(leds[7:4], tens[3:0])
+      `EXPECT_EQ(leds[3:0], ones[3:0])
     end
 
     $display("End of simulation");

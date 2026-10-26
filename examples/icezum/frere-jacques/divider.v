@@ -16,19 +16,23 @@ module divider (
 
   //-- Default divider value.
   //-- Lo ponemos a 1 Hz
-  parameter  M = `F_2KHz;
+  parameter  integer M = `F_2KHz;
 
   //-- Number of bits to hold the divider.
   //-- It's computed with the Verilog function $clog2, which returns the 
   //-- number of bits needed to represent the number M.
   //-- It's a local parameter, which can't be changed when instantiating.
-  localparam N = $clog2(M);
+  localparam integer N = $clog2(M);
 
   //-- Register for the modulo M counter.
   reg [N-1:0] divcounter = 0;
 
+  //-- The counter's last value. Compared through [N-1:0], to match the
+  //-- counter's width.
+  localparam integer LAST = M - 1;
+
   //-- Modulo M counter.
-  always @(posedge clk_in) divcounter <= (divcounter == M - 1) ? 0 : divcounter + 1;
+  always @(posedge clk_in) divcounter <= (divcounter == LAST[N-1:0]) ? 0 : divcounter + 1;
 
   //-- Output the most significant bit on clk_out.
   assign clk_out = divcounter[N-1];
