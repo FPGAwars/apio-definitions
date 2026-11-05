@@ -105,6 +105,7 @@ Every Apio project needs an `apio.ini` at the top of its dir, and all the exampl
 
 - **Several constraint files:** an example that needs more than one selects one per env with `constraint-file = ...` in `apio.ini`. See `alhambra-ii/constraint-files` and `alhambra-ii/multi-board`.
 - **Contents:** define only the pins the example uses. Other board pins may also be listed as a reference, as long as they're commented out and their definitions are correct.
+- **Clock in xilinx:** the board clock also gets `create_clock -period <ns> [get_ports {<clock>}]`, without `-name`, so nextpnr-xilinx times it at the board's frequency.
 
 ## Verilog design rules
 

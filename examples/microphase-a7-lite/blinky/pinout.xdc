@@ -5,6 +5,7 @@
 
 # Clock (50MHz).
 set_property -dict { PACKAGE_PIN J19   IOSTANDARD LVCMOS33 } [get_ports {sys_clk}]
+create_clock -period 20.000 [get_ports {sys_clk}]
 
 # LEDs, active low.
 set_property -dict { PACKAGE_PIN M18   IOSTANDARD LVCMOS33 } [get_ports {leds_n[0]}]
