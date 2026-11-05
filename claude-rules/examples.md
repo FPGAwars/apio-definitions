@@ -323,7 +323,7 @@ A `.gtkw` file is the saved GTKWave signal view that `apio sim` opens for a test
 
 ### Machine-specific lines
 
-Leave out the `[dumpfile]` and `[savefile]` lines (and `[dumpfile_mtime]`, `[dumpfile_size]`). They hold absolute paths from the author's machine. GTKWave writes them on every save, so remove them after saving a file from GTKWave.
+Leave out the `[dumpfile]` and `[savefile]` lines (and `[dumpfile_mtime]`, `[dumpfile_size]`). They hold absolute paths from the author's machine. These paths can include the author's user name and other private information from outside the repo, such as the names of their dirs, so leaving them in would publish it with the example. GTKWave writes them on every save, so remove them after saving a file from GTKWave.
 
 ### Editing an existing `.gtkw` file
 
