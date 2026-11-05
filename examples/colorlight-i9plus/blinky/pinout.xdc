@@ -5,6 +5,7 @@
 
 # Clock (25MHz).
 set_property -dict { PACKAGE_PIN K4    IOSTANDARD LVCMOS33 } [get_ports {sys_clk}]
+create_clock -period 40.000 [get_ports {sys_clk}]
 
 # LED, active high.
 set_property -dict { PACKAGE_PIN A18   IOSTANDARD LVCMOS33 } [get_ports {led}]
